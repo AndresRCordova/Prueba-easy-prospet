@@ -1,0 +1,52 @@
+
+<ion-header>
+
+    <ion-navbar color="secondary">
+      <ion-title>Registrar pago</ion-title>
+    </ion-navbar>
+  
+  </ion-header>
+  
+  
+  <ion-content padding>
+      <table align="center" style="width: 100%;">
+          <tr>
+            <td>
+                <ion-item>
+                    <ion-label>Fecha de Pago</ion-label>
+                    <ion-datetime displayFormat="DD/MM/YYYY" max="2099-12-31" pickerFormat="DD MMMM YYYY" ></ion-datetime>
+                  </ion-item>
+            </td>
+          </tr>
+          <tr>
+              <td>
+                  <ion-item>
+                      <ion-label>Hora de Pago</ion-label>
+                      <ion-datetime displayFormat="h:m a"  pickerFormat="h:m a" ></ion-datetime>
+                    </ion-item>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <ion-item>
+                    <ion-input type="number" placeholder="cantidad"></ion-input>
+                  </ion-item>
+            </td>
+          </tr>
+          <tr>
+            <td>
+                <ion-label>Descripcion</ion-label>
+                <ion-textarea rows="5" name="description"></ion-textarea>
+            </td>
+          </tr>
+            <tr>
+                <td>
+                    <button ion-button color="primary" large block (click)="vercliente()">
+                        Guardar
+                       </button>
+                </td>
+              </tr>
+        </table>
+      
+  </ion-content>
+  

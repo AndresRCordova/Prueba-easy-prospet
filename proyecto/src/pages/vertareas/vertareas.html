@@ -1,0 +1,45 @@
+
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>ver tareas</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+    <ion-card>    
+        <ion-card-content>
+            <ion-item style="font-size: 30px">
+                tarea 1
+                <button ion-button icon-only item-right clear (click)="editartarea()">
+                    <ion-icon name='brush' item-finish style="color: #d03e84"></ion-icon>
+                  </button>
+                  <button ion-button icon-only item-right clear (click)="editarNotificacion()">
+                      <ion-icon name="notifications" style="color: #d03e84"></ion-icon>
+                    </button>
+                </ion-item>
+          <p>
+            datos de la tarea
+          </p>
+        </ion-card-content>
+      </ion-card>
+      <ion-card>    
+          <ion-card-content>
+              <ion-item style="font-size: 30px">
+                  tarea 2
+                  <button ion-button icon-only item-right clear (click)="editartarea()">
+                      <ion-icon name='brush' item-finish style="color: #d03e84"></ion-icon>
+                    </button>
+                    <button ion-button icon-only item-right clear (click)="editarNotificacion()">
+                        <ion-icon name="notifications" style="color: #d03e84"></ion-icon>
+                      </button>
+                  </ion-item>
+            <p>
+              datos de la tarea
+            </p>
+          </ion-card-content>
+        </ion-card>
+
+</ion-content>

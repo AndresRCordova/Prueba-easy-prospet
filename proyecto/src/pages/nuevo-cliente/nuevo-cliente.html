@@ -1,0 +1,71 @@
+
+<ion-header>
+
+  <ion-navbar color="secondary">
+    <ion-title>Agregar nuevo cliente</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+    <table align="center" style="width: 100%;">
+        <tr>
+          <th>
+              <ion-item>
+                  <ion-label floating>Nombre</ion-label>
+                  <ion-input [(ngModel)]="cliente_nombre" type="text"></ion-input>
+                </ion-item>
+          </th>
+        </tr>
+        <tr>
+          <td>
+              <ion-item>
+                  <ion-label floating>Apellido Paterno</ion-label>
+                  <ion-input [(ngModel)]="cliente_ap" type="text"></ion-input>
+                </ion-item>
+          </td>
+        </tr>
+        <tr>
+            <td>
+                <ion-item>
+                    <ion-label floating>Apellido Materno</ion-label>
+                    <ion-input [(ngModel)]="cliente_am" type="text"></ion-input>
+                  </ion-item>
+            </td>
+          </tr>
+        <tr>
+          <td>
+              <ion-item>
+                  <ion-label floating>Correo Electronico</ion-label>
+                  <ion-input [(ngModel)]="cliente_correo" type="text"></ion-input>
+                </ion-item>
+          </td>
+        </tr>
+        <tr>
+            <td>
+                <ion-item>
+                    <ion-label floating>Telefono</ion-label>
+                    <ion-input [(ngModel)]="cliente_telefono" type="text"></ion-input>
+                  </ion-item>
+            </td>
+          </tr>
+          <tr>
+              <td>
+                  <ion-item>
+                      <ion-label>Estatus</ion-label>
+                      <ion-select [(ngModel)]="cliente_estatus">
+                        <ion-option value="0">Basico</ion-option>
+                        <ion-option value="1">A</ion-option>
+                        <ion-option value="3">B</ion-option>
+                        <ion-option value="4">C</ion-option>
+                      </ion-select>
+                    </ion-item>
+              </td>
+            </tr>
+          <tr>
+              <td>
+                  <button ion-button color="primary" large block (click)="crearquery()">
+                      Guardar
+                     </button>
+              </td>
+            </tr>
+      </table>
+</ion-content>

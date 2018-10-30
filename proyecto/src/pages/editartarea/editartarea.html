@@ -1,0 +1,69 @@
+<ion-header>
+
+    <ion-navbar color="secondary">
+      <ion-title>Editar Tarea</ion-title>
+    </ion-navbar>
+  </ion-header>
+  <ion-content padding>
+    <table align="center" style="width: 100%;">
+      <tr>
+        <th>
+            <ion-item>
+                <ion-label floating>Titulo de la Tarea</ion-label>
+                <ion-input type="text"></ion-input>
+              </ion-item>
+        </th>
+      </tr>
+      <tr>
+        <td>
+            <ion-item>
+                <ion-label>Fecha de Inicio</ion-label>
+                <ion-datetime displayFormat="DD/MM/YYYY" max="2099-12-31" pickerFormat="DD MMMM YYYY" ></ion-datetime>
+              </ion-item>
+        </td>
+      </tr>
+      <tr>
+          <td>
+              <ion-item>
+                  <ion-label>Fecha de Final</ion-label>
+                  <ion-datetime displayFormat="DD/MM/YYYY" max="2099-12-31" pickerFormat="DD MMMM YYYY" ></ion-datetime>
+                </ion-item>
+          </td>
+        </tr>
+      <tr>
+        <td>
+            <ion-label>Descripcion</ion-label>
+            <ion-textarea rows="5" name="description"></ion-textarea>
+        </td>
+      </tr>
+
+        <tr>
+            <td>
+                <ion-item>
+                    <ion-label>Estado de la tarea</ion-label>
+                    <ion-select>
+                      <ion-option >Completada</ion-option>
+                      <ion-option >Cancelado</ion-option>
+                      <ion-option >Activo 3</ion-option>
+                    </ion-select>
+                  </ion-item>
+            </td>
+          </tr>
+        <tr>
+            <td>
+                <button ion-button color="primary" large block (click)="vercliente()">
+                    Guardar
+                   </button>
+            </td>
+          </tr>
+          <tr>
+              <td>
+                  <button ion-button color="primary" large block (click)="vercliente()">
+                      Eliminar
+                     </button>
+              </td>
+            </tr>
+    </table>
+  
+  </ion-content>
+  

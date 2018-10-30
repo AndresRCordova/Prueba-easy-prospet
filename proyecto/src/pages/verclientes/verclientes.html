@@ -1,0 +1,75 @@
+
+<ion-header>
+
+  <ion-navbar color="secondary">
+    <ion-title>Clientes</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+  
+    <ion-item>
+        <ion-label>Clientes</ion-label>
+        <ion-toggle checked="true"></ion-toggle>
+      </ion-item>
+      <ion-item>
+          <ion-label>Prospectos</ion-label>
+          <ion-toggle checked="true"></ion-toggle>
+        </ion-item>
+    <ion-card>    
+        <ion-card-content>
+            <ion-card-header>
+                <ion-item style="font-size: 30px">
+                Cliente 1
+                <button ion-button icon-only item-right clear (click)="editarcliente()">
+                    <ion-icon name='brush' item-finish style="color: #d03e84;"></ion-icon>
+                  </button>
+                  <button ion-button icon-only item-right clear (click)="verventas()">
+                    <ion-icon name='cart' item-finish style="color: #d03e84;"></ion-icon>
+                  </button>
+                </ion-item>
+              </ion-card-header>
+          <p>
+            datos del cliente
+          </p>
+        </ion-card-content>
+      
+        <ion-item>
+          <ion-icon name='call' item-start style="color: #d03e84"></ion-icon>
+          Telefono del cliente
+        </ion-item>
+    
+        <ion-item>
+          <ion-icon name='mail' item-start style="color: #55acee"></ion-icon>
+          Correo del cliente
+          
+        </ion-item>
+      </ion-card>
+      <ion-card>    
+          <ion-card-content>
+            <ion-card-header>
+              <ion-item style="font-size: 30px">
+              Prospecto 1
+              <button ion-button icon-only item-right clear (click)="editarcliente()">
+                  <ion-icon name='brush' item-finish style="color: #d03e84"></ion-icon>
+                </button>
+              </ion-item>
+            </ion-card-header>
+            <p>
+              datos del porspecto
+            </p>
+          </ion-card-content>
+      
+          <ion-item>
+            <ion-icon name='call' item-start style="color: #d03e84"></ion-icon>
+            Telefono del prospecto
+          </ion-item>
+      
+          <ion-item>
+            <ion-icon name='mail' item-start style="color: #55acee"></ion-icon>
+            Correo del Prospecto
+          </ion-item>
+        </ion-card>
+
+</ion-content>

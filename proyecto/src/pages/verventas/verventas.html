@@ -1,0 +1,52 @@
+
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>ventas generales</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+    <ion-card>    
+        <ion-card-content>
+            <ion-item style="font-size: 30px">
+                Venta de contado 1
+                <button ion-button icon-only item-right clear (click)="verventasespecificas()">
+                    <ion-icon name='book' item-finish style="color: #422488"></ion-icon>
+                  </button>
+                  <button ion-button icon-only item-right clear (click)="registrarpago()">
+                      <ion-icon name='cash' item-finish style="color: #422488"></ion-icon>
+                    </button>
+                    <button ion-button icon-only item-right clear (click)="verpagos()">
+                        <ion-icon name='clipboard' item-finish style="color: #422488"></ion-icon>
+                      </button>
+                </ion-item>
+          <p>
+            datos de la venta general
+          </p>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card>    
+          <ion-card-content>
+              <ion-item style="font-size: 30px">
+                  Venta a meses 1
+                  <button ion-button icon-only item-right clear (click)="verventasespecificas()">
+                      <ion-icon name='book' item-finish style="color: #422488"></ion-icon>
+                    </button>
+                    <button ion-button icon-only item-right clear (click)="registrarpago()">
+                        <ion-icon name='cash' item-finish style="color: #422488"></ion-icon>
+                      </button>
+                      <button ion-button icon-only item-right clear (click)="verpagos()">
+                          <ion-icon name='clipboard' item-finish style="color: #422488"></ion-icon>
+                        </button>
+                  </ion-item>
+            <p>
+              datos de la venta general
+            </p>
+          </ion-card-content>
+        </ion-card>
+
+</ion-content>
