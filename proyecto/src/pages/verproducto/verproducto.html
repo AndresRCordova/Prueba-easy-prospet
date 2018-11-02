@@ -1,43 +1,20 @@
-
 <ion-header>
 
-    <ion-navbar color="secondary">
-      <ion-title>Productos</ion-title>
-    </ion-navbar>
-  
-  </ion-header>
-  
-  <ion-content padding>
-      <ion-card>    
-          <ion-card-content>
-              <ion-card-header>
-                  <ion-item style="font-size: 30px">
-                  Producto 1
-                  <button ion-button icon-only item-right clear (click)="editarproducto()">
-                      <ion-icon name='brush' item-finish style="color: #d03e84;"></ion-icon>
-                    </button>
-                  </ion-item>
-                </ion-card-header>
-                <ion-img width="150" height="150" src="../assets/imgs/crema.jpg"></ion-img>
-            <p>
-              datos del producto
-            </p>
-          </ion-card-content>
-        </ion-card>
-        <ion-card>    
-            <ion-card-content>
-              <ion-card-header>
-                <ion-item style="font-size: 30px">
-                Producto 2
-                <button ion-button icon-only item-right clear (click)="editarproducto()">
-                    <ion-icon name='brush' item-finish style="color: #d03e84"></ion-icon>
-                  </button>
-                </ion-item>
-              </ion-card-header>
-              <p>
-                datos del producto
-              </p>
-            </ion-card-content>
-          </ion-card>
-  
-  </ion-content>
+  <ion-navbar color="secondary">
+    <ion-title>Productos</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+    <ion-item *ngFor="let item of listproductos">
+        <ion-thumbnail item-left>
+          <img src=>
+        </ion-thumbnail>
+        <h2>{{item.nombre}}</h2>
+        <p>{{item.descripcion}} • $ {{item.precio}}</p>
+        <button ion-button icon-only item-right clear (click)="editarproducto(item.idProducto)">
+            <ion-icon name='brush' item-finish style="color: #d03e84;"></ion-icon>
+          </button>
+      </ion-item>
+</ion-content>

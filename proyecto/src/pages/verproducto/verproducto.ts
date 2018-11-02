@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { EditarproductoPage } from '../editarproducto/editarproducto';
+import { DatabaseProvider } from '../../providers/database/database';
 
 /**
  * Generated class for the VerproductoPage page.
@@ -15,16 +16,28 @@ import { EditarproductoPage } from '../editarproducto/editarproducto';
   templateUrl: 'verproducto.html',
 })
 export class VerproductoPage {
+   listproductos: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,private database: DatabaseProvider) {
   }
 
-  ionViewDidLoad() {
+  ionViewDidEnter() {
     console.log('ionViewDidLoad VerproductoPage');
+    this.getallproductos();
   }
 
-  editarproducto(){
-    this.navCtrl.push(EditarproductoPage);
+  editarproducto(idproducto:number){
+    this.navCtrl.push(EditarproductoPage,{data: idproducto});
   }
+  getallproductos(){
+    this.database.getallproductos().then((data: any)=>{
+      console.log(data);
+      this.listproductos= data;
+    },(error)=>{
+      console.log(error);
+    })
+  }
+  
+
 
 }

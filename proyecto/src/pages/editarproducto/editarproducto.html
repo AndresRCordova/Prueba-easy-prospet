@@ -4,27 +4,31 @@
       <ion-title>Editar Producto</ion-title>
     </ion-navbar>
   </ion-header>
-  <ion-content padding>
+  <ion-content padding >
+
     <table align="center" style="width: 100%;">
       <tr>
         <th>
-            <ion-item>
+            <ion-item >
                 <ion-label floating>Nombre del producto</ion-label>
-                <ion-input type="text"></ion-input>
+                <ion-input [(ngModel)]="producto_nombre" type="text">{{producto[2]}}</ion-input>
               </ion-item>
         </th>
       </tr>
       <tr>
           <td>
               <ion-item>
-                  <ion-input type="number" placeholder="precio"></ion-input>
+                  <ion-label floating>Precio del producto</ion-label>
+                  <ion-input [(ngModel)]="producto_precio" type="number"></ion-input>
                 </ion-item>
           </td>
       </tr>
       <tr>
         <td>
+          <ion-item>
             <ion-label>Descripcion</ion-label>
-            <ion-textarea rows="5" name="description"></ion-textarea>
+            <ion-textarea [(ngModel)]="producto_descripcion" rows="5" name="description"></ion-textarea>
+          </ion-item>
         </td>
       </tr>
         <tr>
@@ -36,11 +40,11 @@
           </tr>
           <tr>
               <td>
-                  <button ion-button color="primary" large block >
+                  <button ion-button color="primary" large block (click)="deleteproduto()" >
                       eliminar
                      </button>
               </td>
             </tr>
     </table>
-  
+
   </ion-content>

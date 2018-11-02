@@ -11,13 +11,14 @@ import {NuevaVentaPage} from '../nueva-venta/nueva-venta';
 import {VerpagosPage} from '../verpagos/verpagos';
 import {VerproductoPage} from '../verproducto/verproducto';
 import {NuevoproductoPage} from '../nuevoproducto/nuevoproducto'
+import { DatabaseProvider } from '../../providers/database/database';
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
 export class HomePage {
-  constructor(public navCtrl: NavController) {
+  constructor(public navCtrl: NavController, private database: DatabaseProvider) {
   }
    nuevocliente(){
     this.navCtrl.push(NuevoClientePage);

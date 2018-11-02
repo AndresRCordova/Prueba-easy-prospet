@@ -24,7 +24,9 @@ import {VerproductoPage} from '../pages/verproducto/verproducto';
 import {EditarproductoPage} from '../pages/editarproducto/editarproducto';
 import {NuevoproductoPage} from '../pages/nuevoproducto/nuevoproducto';
 import { SQLite} from '@ionic-native/sqlite';
-import { DatabaseServiceProvider } from '../providers/database-service/database-service';
+import { DatabaseProvider } from '../providers/database/database';
+import { HttpModule } from '@angular/http';
+
 
 @NgModule({
   declarations: [
@@ -50,6 +52,7 @@ import { DatabaseServiceProvider } from '../providers/database-service/database-
   ],
   imports: [
     BrowserModule,
+    HttpModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
@@ -72,14 +75,14 @@ import { DatabaseServiceProvider } from '../providers/database-service/database-
     VerpagosPage,
     VerproductoPage,
     EditarproductoPage,
-    NuevoproductoPage,
+    NuevoproductoPage
       ],
   providers: [
     StatusBar,
     SplashScreen,
     SQLite,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    DatabaseServiceProvider
+    DatabaseProvider
   ]
 })
 export class AppModule {}
