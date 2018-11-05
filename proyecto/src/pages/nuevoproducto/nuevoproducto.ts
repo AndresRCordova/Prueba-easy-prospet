@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { DatabaseProvider } from '../../providers/database/database';
+import {Validators, FormBuilder, FormGroup } from '@angular/forms';
 
 /**
  * Generated class for the NuevoproductoPage page.
@@ -15,11 +16,15 @@ import { DatabaseProvider } from '../../providers/database/database';
   templateUrl: 'nuevoproducto.html',
 })
 export class NuevoproductoPage {
-  public producto_nombre: string;
-  public producto_precio: number;
-  public producto_descripcion: string;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private database: DatabaseProvider) {
+  public productoform : FormGroup;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, private database: DatabaseProvider,private formBuilder: FormBuilder) {
+    this.productoform = this.formBuilder.group({
+      nombre: ['', Validators.required],
+      precio: ['', Validators.required],
+      descripcion: [''],
+    });
   }
 
   ionViewDidLoad() {
@@ -27,8 +32,7 @@ export class NuevoproductoPage {
   }
 
   createproduto(){
-    console.log(this.producto_nombre+this.producto_precio+this.producto_descripcion);
-    this.database.createProducto(this.producto_nombre,this.producto_precio,this.producto_descripcion).then((data)=>{
+    this.database.createProducto(this.productoform.value.nombre,this.productoform.value.precio,this.productoform.value.descripcion).then((data)=>{
       console.log(data);
     },(error)=>{
       console.log(error);

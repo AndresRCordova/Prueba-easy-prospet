@@ -5,37 +5,21 @@
     </ion-navbar>
   </ion-header>
   <ion-content padding>
-    <table align="center" style="width: 100%;">
-      <tr>
-        <th>
-            <ion-item>
-                <ion-label floating>Nombre del producto</ion-label>
-                <ion-input [(ngModel)]="producto_nombre" type="text"></ion-input>
-              </ion-item>
-        </th>
-      </tr>
-      <tr>
-          <td>
-              <ion-item>
-                  <ion-label floating>Precio del producto</ion-label>
-                  <ion-input [(ngModel)]="producto_precio"  type="number" ></ion-input>
-                </ion-item>
-          </td>
-      </tr>
-      <tr>
-        <td>
-            <ion-label>Descripcion</ion-label>
-            <ion-textarea [(ngModel)]="producto_descripcion" rows="5" name="description"></ion-textarea>
-        </td>
-      </tr>
-        <tr>
-            <td>
-                <button ion-button color="primary" large block (click)="createproduto()" >
-                    Guardar
-                   </button>
-            </td>
-          </tr>
-    </table>
+    <form [formGroup]="productoform" (ngSubmit)="createproduto()">
+      <ion-item>
+        <ion-label>Nombre</ion-label>
+        <ion-input type="text" formControlName="nombre"></ion-input>
+      </ion-item>
+      <ion-item>
+          <ion-label>Precio</ion-label>
+          <ion-input type="number" formControlName="precio"></ion-input>
+        </ion-item>
+      <ion-item>
+        <ion-label>Descripcion</ion-label>
+        <ion-textarea rows="5" formControlName="descripcion"></ion-textarea>
+      </ion-item>
+      <button ion-button type="submit" [disabled]="!productoform.valid">Guardar</button>
+    </form>
   
   </ion-content>
   

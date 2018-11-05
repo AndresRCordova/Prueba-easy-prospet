@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { DatabaseProvider } from '../../providers/database/database';
+import {Validators, FormBuilder, FormGroup } from '@angular/forms';
 
 /**
  * Generated class for the EditarproductoPage page.
@@ -17,11 +18,14 @@ import { DatabaseProvider } from '../../providers/database/database';
 export class EditarproductoPage {
   private iddelproducto: number;
   public producto: any;
-  public producto_nombre: string;
-  public producto_precio: number;
-  public producto_descripcion: string;
-  constructor(public navCtrl: NavController, public navParams: NavParams,private database: DatabaseProvider) {
+  public productoform : FormGroup;
+  constructor(public navCtrl: NavController, public navParams: NavParams,private database: DatabaseProvider,private formBuilder: FormBuilder ) {
     this.iddelproducto=this.navParams.get('data');
+    this.productoform = this.formBuilder.group({
+      nombre: ['this.productoform.value.nombre', Validators.required],
+      precio: ['this.productoform.value.precio', Validators.required],
+      descripcion: ['this.productoform.value.descripcion'],
+    });
   }
 
   ionViewWillEnter() {
@@ -32,7 +36,9 @@ export class EditarproductoPage {
   getaproducto(){
     this.database.getoneproducto(this.iddelproducto).then((data: any)=>{
       console.log(data);
-      this.producto= data;
+      this.productoform.value.nombre=data[0].nombre;
+      this.productoform.value.precio=data[0].precio;
+      this.productoform.value.descripcion=data[0].descripcion;
     },(error)=>{
       console.log(error);
     })
@@ -44,6 +50,9 @@ export class EditarproductoPage {
       console.log(error);
     });
     this.navCtrl.pop();
+  }
+  actualizarproducto(){
+
   }
 
 
