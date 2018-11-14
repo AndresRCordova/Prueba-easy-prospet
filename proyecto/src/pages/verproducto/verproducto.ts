@@ -25,6 +25,7 @@ export class VerproductoPage {
     console.log('ionViewDidLoad VerproductoPage');
     this.getallproductos();
   }
+  
 
   editarproducto(idproducto:number){
     this.navCtrl.push(EditarproductoPage,{data: idproducto});

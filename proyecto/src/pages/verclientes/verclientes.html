@@ -1,4 +1,3 @@
-
 <ion-header>
 
   <ion-navbar color="secondary">
@@ -8,68 +7,75 @@
 </ion-header>
 
 <ion-content padding>
-  
-    <ion-item>
-        <ion-label>Clientes</ion-label>
-        <ion-toggle checked="true"></ion-toggle>
-      </ion-item>
-      <ion-item>
-          <ion-label>Prospectos</ion-label>
-          <ion-toggle checked="true"></ion-toggle>
+  <ion-item>
+    <ion-label>Clientes</ion-label>
+  <ion-toggle [(ngModel)]="Sclientes"></ion-toggle>
+</ion-item>
+
+<ion-item>
+  <ion-label>Prospectos</ion-label>
+  <ion-toggle [(ngModel)]="Sprospectos"></ion-toggle>
+</ion-item>
+    <ion-list *ngIf="Sclientes">
+        <ion-list-header>
+            Clientes
+          </ion-list-header>
+      <ion-item *ngFor="let cliente of listclientes">
+          <ion-item>
+          <button ion-button icon-only item-right clear (click)="editarcliente(cliente.idCliente)">
+              <ion-icon name='brush' item-finish style="color: #d03e84;"></ion-icon>
+            </button>
+            <button ion-button icon-only item-right clear (click)="verventas()">
+              <ion-icon name='cart' item-finish style="color: #d03e84;"></ion-icon>
+            </button>
+          <h2>{{cliente.nombre}}</h2>
+          <h3> {{cliente.paterno}} {{cliente.materno}}</h3>
         </ion-item>
-    <ion-card>    
-        <ion-card-content>
-            <ion-card-header>
-                <ion-item style="font-size: 30px">
-                Cliente 1
-                <button ion-button icon-only item-right clear (click)="editarcliente()">
-                    <ion-icon name='brush' item-finish style="color: #d03e84;"></ion-icon>
-                  </button>
-                  <button ion-button icon-only item-right clear (click)="verventas()">
-                    <ion-icon name='cart' item-finish style="color: #d03e84;"></ion-icon>
-                  </button>
-                </ion-item>
-              </ion-card-header>
-          <p>
-            datos del cliente
-          </p>
-        </ion-card-content>
-      
-        <ion-item>
+          <ion-item>
           <ion-icon name='call' item-start style="color: #d03e84"></ion-icon>
-          Telefono del cliente
+          {{cliente.telefono}}
         </ion-item>
-    
         <ion-item>
           <ion-icon name='mail' item-start style="color: #55acee"></ion-icon>
-          Correo del cliente
-          
-        </ion-item>
-      </ion-card>
-      <ion-card>    
-          <ion-card-content>
-            <ion-card-header>
-              <ion-item style="font-size: 30px">
-              Prospecto 1
-              <button ion-button icon-only item-right clear (click)="editarcliente()">
-                  <ion-icon name='brush' item-finish style="color: #d03e84"></ion-icon>
-                </button>
-              </ion-item>
-            </ion-card-header>
-            <p>
-              datos del porspecto
-            </p>
-          </ion-card-content>
-      
-          <ion-item>
-            <ion-icon name='call' item-start style="color: #d03e84"></ion-icon>
-            Telefono del prospecto
-          </ion-item>
-      
-          <ion-item>
-            <ion-icon name='mail' item-start style="color: #55acee"></ion-icon>
-            Correo del Prospecto
-          </ion-item>
-        </ion-card>
+          {{cliente.correo}}
 
+        </ion-item>
+        </ion-item>
+      </ion-list>
+      <ion-list *ngIf="Sprospectos">
+          <ion-list-header>
+              Prospectos
+            </ion-list-header>
+        <ion-item *ngFor="let Prospectos of listprospectos">
+          <ion-item>
+              <button ion-button icon-only item-right clear (click)="editarcliente(Prospectos.idCliente)">
+                  <ion-icon name='brush' item-finish style="color: #d03e84;"></ion-icon>
+                </button>
+                <button ion-button icon-only item-right clear (click)="verventas()">
+                  <ion-icon name='cart' item-finish style="color: #d03e84;"></ion-icon>
+                </button>
+               <ion-item *ngIf="Prospectos.estatus==1"> 
+                <h1>Prospecto A</h1>
+               </ion-item>
+               <ion-item *ngIf="Prospectos.estatus==2"> 
+                  <h1>Prospecto B</h1>
+                 </ion-item>
+                 <ion-item *ngIf="Prospectos.estatus==3"> 
+                    <h1>Prospecto C</h1>
+                   </ion-item>
+              <h2>{{Prospectos.nombre}}</h2>
+              <h3> {{Prospectos.paterno}} {{Prospectos.materno}}</h3>
+            </ion-item>
+              <ion-item>
+              <ion-icon name='call' item-start style="color: #d03e84"></ion-icon>
+              {{Prospectos.telefono}}
+            </ion-item>
+            <ion-item>
+              <ion-icon name='mail' item-start style="color: #55acee"></ion-icon>
+              {{Prospectos.correo}}
+            </ion-item>
+
+          </ion-item>
+        </ion-list>
+  
 </ion-content>

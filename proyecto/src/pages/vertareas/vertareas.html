@@ -7,39 +7,75 @@
 
 </ion-header>
 
-
 <ion-content padding>
-    <ion-card>    
-        <ion-card-content>
-            <ion-item style="font-size: 30px">
-                tarea 1
-                <button ion-button icon-only item-right clear (click)="editartarea()">
-                    <ion-icon name='brush' item-finish style="color: #d03e84"></ion-icon>
-                  </button>
-                  <button ion-button icon-only item-right clear (click)="editarNotificacion()">
-                      <ion-icon name="notifications" style="color: #d03e84"></ion-icon>
-                    </button>
-                </ion-item>
-          <p>
-            datos de la tarea
-          </p>
-        </ion-card-content>
-      </ion-card>
-      <ion-card>    
-          <ion-card-content>
-              <ion-item style="font-size: 30px">
-                  tarea 2
-                  <button ion-button icon-only item-right clear (click)="editartarea()">
-                      <ion-icon name='brush' item-finish style="color: #d03e84"></ion-icon>
-                    </button>
-                    <button ion-button icon-only item-right clear (click)="editarNotificacion()">
-                        <ion-icon name="notifications" style="color: #d03e84"></ion-icon>
-                      </button>
-                  </ion-item>
-            <p>
-              datos de la tarea
-            </p>
-          </ion-card-content>
-        </ion-card>
+    <ion-item>
+        <ion-label>Activadas</ion-label>
+      <ion-toggle [(ngModel)]="Sactivadas"></ion-toggle>
+    </ion-item>
+    
+    <ion-item>
+      <ion-label>Incompletas</ion-label>
+      <ion-toggle [(ngModel)]="Sdesactivadas"></ion-toggle>
+    </ion-item>
+    <ion-item>
+        <ion-label>completadas</ion-label>
+        <ion-toggle [(ngModel)]="Scompletadas"></ion-toggle>
+      </ion-item>
+  <ion-list *ngIf="Sactivadas">
+      <ion-list-header>
+          Activadas
+        </ion-list-header>
+    <ion-item *ngFor="let tarea of listtareasactivadas">
+        
+        <ion-item>
+            <button *ngIf="tarea.alerta==1" ion-button icon-only item-right clear (click)="editarNotificacion(tarea.idTarea)">
+                <ion-icon name='notifications' item-finish style="color: #d03e84;"></ion-icon>
+              </button>
+        <button ion-button icon-only item-right clear (click)="editartarea(tarea.idTarea)">
+            <ion-icon name='brush' item-finish style="color: #d03e84;"></ion-icon>
+          </button>
+          
+          <h2>{{tarea.titulo}}</h2>
+        <h3> {{tarea.fecha_inicio}} - {{tarea.fecha_fin}}</h3>
+            <h4>{{tarea.descripcion}}</h4>
+        </ion-item>
+      
+      </ion-item>
+    </ion-list>
+    
 
+
+    <ion-list *ngIf="Sdesactivadas">
+        <ion-list-header>
+            Tareas Incompletas
+           </ion-list-header>
+        <ion-item *ngFor="let tarea of listtareasdesactivadas">
+            <ion-item>
+              <h2>{{tarea.titulo}}</h2>
+            <h3> {{tarea.fecha_inicio}} - {{tarea.fecha_fin}}</h3>
+          </ion-item>
+            <ion-item text-wrap>
+                {{tarea.descripcion}}
+            </ion-item>
+          
+          </ion-item>
+        </ion-list>
+
+        <ion-list *ngIf="Scompletadas">
+            <ion-list-header>
+                Tareas Completadas
+               </ion-list-header>
+            <ion-item *ngFor="let tarea of listtareascompletadas">
+                <ion-item>
+                  <h2>{{tarea.titulo}}</h2>
+                <h3> {{tarea.fecha_inicio}} - {{tarea.fecha_fin}}</h3>
+              </ion-item>
+                <ion-item text-wrap>
+                    {{tarea.descripcion}}
+                </ion-item>
+              
+              </ion-item>
+            </ion-list>
+
+        
 </ion-content>

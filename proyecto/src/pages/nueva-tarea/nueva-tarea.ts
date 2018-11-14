@@ -1,12 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
-/**
- * Generated class for the NuevaTareaPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { DatabaseProvider } from '../../providers/database/database';
+import {Validators, FormBuilder, FormGroup } from '@angular/forms';
 
 @IonicPage()
 @Component({
@@ -14,19 +9,55 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'nueva-tarea.html',
 })
 export class NuevaTareaPage {
-  public tarea_nombre : any;
-  public tarea_fechaini : any;
-  public tarea_fechafin : any;
-  public tarea_descripcion : any;
-  public tarea_estado : any;
+  public tareaform : FormGroup;
+  public actual=new Date();
+  public añoactual:number = this.actual.getFullYear();
+  public mesactual:number=this.actual.getUTCMonth();
+  public diaactual:number=this.actual.getUTCDate();
+  public fecha: string;
+  public fechaactual:string=this.actual.toISOString();
+  public activado:boolean=true;
+  
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private database: DatabaseProvider,private formBuilder: FormBuilder) {
+    this.tareaform = this.formBuilder.group({
+      titulo: ['', Validators.required],
+      fecha_creacion: ['', Validators.required],
+      fecha_inicio: ['', Validators.required],
+      fecha_fin: ['', Validators.required],
+      descripcion: ['', Validators.required],
+      activado:['', Validators.required]
+    });
   }
+
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad NuevaTareaPage');
   }
 
-  construirquery(){
+  createtarea(){
+    if(this.diaactual<10){
+      this.fecha= this.añoactual+"-"+(this.mesactual+1)+"-0"+this.diaactual;
+    }else{
+      this.fecha= this.añoactual+"-"+(this.mesactual+1)+"-"+this.diaactual;
+    }
+
+    if(this.activado){
+      console.log(this.tareaform.value.titulo,this.fecha,this.tareaform.value.fecha_inicio,this.tareaform.value.fecha_fin,this.tareaform.value.descripcion,1,0);
+    this.database.createtarea(this.tareaform.value.titulo,this.fecha,this.tareaform.value.fecha_inicio,this.tareaform.value.fecha_fin,this.tareaform.value.descripcion,1,0).then((data)=>{
+      console.log(data);
+    },(error)=>{
+      console.log(error);
+    });
+    this.navCtrl.pop();
+  }else{
+    console.log(this.tareaform.value.titulo,this.fecha,this.tareaform.value.fecha_inicio,this.tareaform.value.fecha_fin,this.tareaform.value.descripcion,0,0);
+    this.database.createtarea(this.tareaform.value.titulo,this.fecha,this.tareaform.value.fecha_inicio,this.tareaform.value.fecha_fin,this.tareaform.value.descripcion,0,0).then((data)=>{
+      console.log(data);
+    },(error)=>{
+      console.log(error);
+    });
+    this.navCtrl.pop();
   }
+}
 }

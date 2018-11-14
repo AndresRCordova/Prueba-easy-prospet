@@ -1,113 +1,59 @@
-
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>Ingresar Nueva Venta</ion-title>
-  </ion-navbar>
+    <ion-navbar>
+        <ion-title>Ingresar Nueva Venta</ion-title>
+    </ion-navbar>
 
 </ion-header>
 <ion-content padding>
-    <table align="center" style="width: 100%;">
-        <tr>
-            <th colspan="2">
+    <form [formGroup]="ventaform" (ngSubmit)="createventa()">
+        <ion-item>
+            <ion-label>Numero de Venta</ion-label>
+            <ion-input disabled type="text" formControlName="NumeroVenta" value="{{this.numerodeventa}}"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Cliente</ion-label>
+            <ion-select formControlName="Cliente">
+                <ion-option *ngFor="let cliente of clientes" [value]="cliente.idCliente">{{cliente.nombre}} {{cliente.paterno}} {{cliente.materno}}</ion-option>
+            </ion-select>
+        </ion-item>
+        <ion-item>
+            <ion-label>Fecha</ion-label>
+            <ion-datetime disabled displayFormat="YYYY-MM-DD" pickerFormat="YYYY MM DD" [(ngModel)]="this.fechaactual" formControlName="fecha"></ion-datetime>
+        </ion-item>
+        <ion-item *ngFor="let att of ventasespecificas; let idx = index">
+            <ion-list>
                 <ion-item>
-                    Numero de Venta
-                  </ion-item>
-                  
-            </th>
-          </tr>
-          <tr>
-              <td colspan="2">
-                  <ion-item>
-                      <ion-select [(ngModel)]="venta_cliente" placeholder="Cliente" style="width: 100%;max-width: 100%;">
-                        <ion-option value="0">Cliente 1</ion-option>
-                        <ion-option value="1">Cliente 2</ion-option>
-                        <ion-option value="3">Cliente 3</ion-option>
-                        <ion-option value="4">Cliente 4</ion-option>
-                      </ion-select>
-                    </ion-item>
-              </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <ion-item>
-                        <ion-label>Fecha de la venta</ion-label>
-                        <ion-datetime [(ngModel)]="venta_fecha" displayFormat="DD/MM/YYYY" max="2099-12-31" pickerFormat="DD MMMM YYYY" ></ion-datetime>
-                      </ion-item>
-                </td>
-              </tr>
-              <tr>
-                  <td width="50%">
-                  <ion-item *ngFor="let att of anArray; let idx = index">
-                                <ion-select [(ngModel)]="venta_productos[idx]" placeholder="Producto" style="width: 100%;max-width: 100%;">
-                                  <ion-option value="0">producto 1</ion-option>
-                                  <ion-option value="1">producto 2</ion-option>
-                                  <ion-option value="3">producto 3</ion-option>
-                                  <ion-option value="4">producto 4</ion-option>
-                                </ion-select>
-                    </ion-item>
-                  </td>
-                  <td width="50%">
-                      <ion-item *ngFor="let att of anArray; let idx = index">
-                          <ion-input [(ngModel)]="venta_cantidad[idx]" type="number" placeholder="cantidad"></ion-input>
-                        </ion-item>
-                  </td>
-                  
-                </tr>
-                <tr>
-                    <td>
-                        <ion-item>
-                            <button ion-button item-right icon-only clear (click)="Add()" >
-                                <ion-icon name="add" style="font-size: 30px"></ion-icon>
-                              </button>
-                          </ion-item>
-                    </td>
-                    <td>
-                        <ion-item>
-                            <button ion-button icon-only clear (click)="remove()" >
-                                <ion-icon name="close-circle" style="font-size: 30px"></ion-icon>
-                              </button>
-                          </ion-item>
-                    </td>
-                  </tr>
-              <tr>
-                  <th colspan="2">
-                      <ion-item>
-                          <ion-label floating>Total de la venta</ion-label>
-                          <ion-input [(ngModel)]="venta_total" type="text"></ion-input>
-                        </ion-item>
-                  </th>
-                </tr>
-              <tr>
-                  <td colspan="2">
-                      <ion-item>
-                          <ion-select [(ngModel)]="venta_tipopago" placeholder="Tipo de pago"  style="width: 100%;max-width: 100%;">
-                            <ion-option selected  value="0">DE contado</ion-option>
-                            <ion-option value="1">A Meses</ion-option>
-                          </ion-select>
-                        </ion-item>
-                  </td>
-                  </tr>
-                  <tr>
-                  <td colspan="2">
-                      <div>
-                      <ion-item >
-                          <ion-select [(ngModel)]="venta_meses" placeholder="meses"  style="width: 100%;max-width: 100%;" [disabled]="!(venta_tipopago == 1)">
-                            <ion-option value="3">3 meses</ion-option>
-                            <ion-option value="6">6 meses</ion-option>
-                            <ion-option value="9">9 meses</ion-option>
-                          </ion-select>
-                        </ion-item>
-                    </div>
-                  </td>
-                </tr>
-          <tr>
-              <td colspan="2">
-                  <button ion-button color="primary" large block (click)="contruirquery()">
-                      Guardar
-                     </button>
-              </td>
-            </tr>
-      </table>
-</ion-content>
+                <ion-select item-start placeholder="producto" style="width: 75%;max-width: 75%;" [(ngModel)]="this.prodid[idx].id"  [ngModelOptions]="{standalone: true}">
+                    <ion-option *ngFor="let producto of productos" [value]="producto.idProducto" >{{producto.nombre}} ${{producto.precio}}</ion-option>
+                </ion-select>
+                <ion-input placeholder="cantidad" type="number" [(ngModel)]="this.cantidad[idx].cantidad"  [ngModelOptions]="{standalone: true}" (ionBlur)="cantidadintroducida()"></ion-input>
+            </ion-item>
+            </ion-list>
+        </ion-item>
+        <ion-item >
+            <button type="button" ion-button item-right icon-only clear (click)="Add()">
+                <ion-icon name="add" style="font-size: 30px"></ion-icon>
+            </button>
+            <button type="button" ion-button icon-only clear (click)="remove()">
+                <ion-icon name="close-circle" style="font-size: 30px"></ion-icon>
+            </button>
+        </ion-item>
+        <ion-item>
+                <ion-label>Total de la Venta</ion-label>
+                <ion-input disabled type="text" formControlName="total" value="{{this.total}}"></ion-input>
+            </ion-item>
 
+        <ion-item>
+            <ion-select formControlName="meses" placeholder="meses" style="width: 100%;max-width: 100%;">
+                <ion-option value="0">0 meses/de contado</ion-option>
+                <ion-option value="3">3 meses</ion-option>
+                <ion-option value="6">6 meses</ion-option>
+                <ion-option value="9">9 meses</ion-option>
+            </ion-select>
+        </ion-item>
+
+        <button ion-button large block type="submit" [disabled]="!ventaform.valid">Guardar</button>
+    </form>
+
+</ion-content>

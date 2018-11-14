@@ -26,6 +26,7 @@ import {NuevoproductoPage} from '../pages/nuevoproducto/nuevoproducto';
 import { SQLite} from '@ionic-native/sqlite';
 import { DatabaseProvider } from '../providers/database/database';
 import { HttpModule } from '@angular/http';
+import { LocalNotifications } from '@ionic-native/local-notifications'
 
 
 @NgModule({
@@ -81,6 +82,7 @@ import { HttpModule } from '@angular/http';
     StatusBar,
     SplashScreen,
     SQLite,
+    LocalNotifications,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     DatabaseProvider
   ]

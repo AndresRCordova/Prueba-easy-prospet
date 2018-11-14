@@ -29,8 +29,10 @@ export class NuevoproductoPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad NuevoproductoPage');
+    
   }
 
+  
   createproduto(){
     this.database.createProducto(this.productoform.value.nombre,this.productoform.value.precio,this.productoform.value.descripcion).then((data)=>{
       console.log(data);

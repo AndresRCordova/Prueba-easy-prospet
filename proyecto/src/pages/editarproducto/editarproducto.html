@@ -8,17 +8,18 @@
       <form [formGroup]="productoform" (ngSubmit)="actualizarproducto()">
           <ion-item>
             <ion-label>Nombre</ion-label>
-            <ion-input type="text" formControlName="nombre" value="{{productoform.value.nombre}}"></ion-input>
+            <ion-input type="text" formControlName="nombre" value="{{this.nombre}}"></ion-input>
           </ion-item>
           <ion-item>
               <ion-label>Precio</ion-label>
-              <ion-input type="number" formControlName="precio" value="{{productoform.value.precio}}"></ion-input>
+              <ion-input type="number" formControlName="precio" value="{{this.precio}}"></ion-input>
             </ion-item>
           <ion-item>
             <ion-label>Descripcion</ion-label>
-            <ion-textarea rows="5" formControlName="descripcion" value="{{productoform.value.descripcion}}"></ion-textarea>
+            <ion-textarea rows="5" formControlName="descripcion" value="{{this.descripcion}}"></ion-textarea>
           </ion-item>
-          <button ion-button type="submit" [disabled]="!productoform.valid">Guardar</button>
-          <button ion-button (click)="deleteproduto()">Borrar</button>
+          <button ion-button large block type="submit" [disabled]="!productoform.valid">Actualizar</button>
+          <button ion-button large block (click)="deleteproduto()">Borrar</button>
+          
         </form>
   </ion-content>

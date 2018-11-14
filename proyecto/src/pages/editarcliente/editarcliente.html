@@ -6,74 +6,39 @@
     </ion-navbar>
   </ion-header>
   <ion-content padding>
-      <table align="center" style="width: 100%;">
-          <tr>
-            <th>
-                <ion-item>
-                    <ion-label floating>Nombre</ion-label>
-                    <ion-input type="text"></ion-input>
-                  </ion-item>
-            </th>
-          </tr>
-          <tr>
-            <td>
-                <ion-item>
-                    <ion-label floating>Apellido Paterno</ion-label>
-                    <ion-input type="text"></ion-input>
-                  </ion-item>
-            </td>
-          </tr>
-          <tr>
-              <td>
-                  <ion-item>
-                      <ion-label floating>Apellido Materno</ion-label>
-                      <ion-input type="text"></ion-input>
-                    </ion-item>
-              </td>
-            </tr>
-          <tr>
-            <td>
-                <ion-item>
-                    <ion-label floating>Correo Electronico</ion-label>
-                    <ion-input type="text"></ion-input>
-                  </ion-item>
-            </td>
-          </tr>
-          <tr>
-              <td>
-                  <ion-item>
-                      <ion-label floating>Telefono</ion-label>
-                      <ion-input type="text"></ion-input>
-                    </ion-item>
-              </td>
-            </tr>
-            <tr>
-                <td>
-                    <ion-item>
-                        <ion-label>Estatus</ion-label>
-                        <ion-select>
-                          <ion-option value="0">Basico</ion-option>
-                          <ion-option value="1">A</ion-option>
-                          <ion-option value="3">B</ion-option>
-                          <ion-option value="4">C</ion-option>
-                        </ion-select>
-                      </ion-item>
-                </td>
-              </tr>
-            <tr>
-                <td>
-                    <button ion-button color="primary" large block (click)="guardarcliente()">
-                        Guardar
-                       </button>
-                </td>
-              </tr>
-              <tr>
-                  <td>
-                      <button ion-button color="primary" large block (click)="eliminarcliente()">
-                          eliminar
-                         </button>
-                  </td>
-                </tr>
-        </table>
+      <form [formGroup]="clienteform" (ngSubmit)="actualizarcliente()">
+          <ion-item>
+            <ion-label>Nombre</ion-label>
+            <ion-input type="text" formControlName="nombre" value="{{this.nombre}}"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label>Ap. Paterno</ion-label>
+            <ion-input type="text" formControlName="appaterno" value="{{this.appaterno}}"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label>Ap. Materno</ion-label>
+            <ion-input type="text" formControlName="apmaterno" value="{{this.apmaterno}}"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label>Email</ion-label>
+            <ion-input type="email" formControlName="correo" value="{{this.correo}}"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label>Telefono</ion-label>
+            <ion-input type="tel" formControlName="telefono" value="{{this.telefono}}"></ion-input>
+          </ion-item>
+          <ion-item>
+              <ion-label>Estatus</ion-label>
+              <ion-select formControlName="estatus" [(ngModel)]="this.estatus" >
+                <ion-option value="0">Basico</ion-option>
+                <ion-option value="1">Prospecto A</ion-option>
+                <ion-option value="2">Prospecto B</ion-option>
+                <ion-option value="3">Prospecto C</ion-option>
+              </ion-select>
+          </ion-item>
+      
+          <button ion-button large block type="submit" [disabled]="!clienteform.valid">Guardar</button>
+          <button ion-button large block (click)="deletecliente()">Borrar</button>
+        </form>
   </ion-content>
   

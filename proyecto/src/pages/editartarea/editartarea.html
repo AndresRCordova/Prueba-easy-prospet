@@ -5,65 +5,42 @@
     </ion-navbar>
   </ion-header>
   <ion-content padding>
-    <table align="center" style="width: 100%;">
-      <tr>
-        <th>
+      <form [formGroup]="tareaform" (ngSubmit)="actualizartarea()">
+          <ion-item>
+            <ion-label>Titulo de la tarea</ion-label>
+            <ion-input type="text" formControlName="titulo" value="{{this.titulo}}"></ion-input>
+          </ion-item>
+          <ion-item>
+              <ion-label>Fecha de creacion</ion-label>
+              <ion-datetime  disabled displayFormat="YYYY-MM-DD" pickerFormat="YYYY MM DD" [(ngModel)]="this.fecha_creacion" formControlName="fecha_creacion"></ion-datetime>
+            </ion-item>
             <ion-item>
-                <ion-label floating>Titulo de la Tarea</ion-label>
-                <ion-input type="text"></ion-input>
+                <ion-label>Fecha de inicio</ion-label>
+                <ion-datetime displayFormat="YYYY-MM-DD" min="{{this.fecha_creacion}}" max="2030" pickerFormat="YYYY MM DD" formControlName="fecha_inicio" [(ngModel)]="this.fecha_inicio"></ion-datetime>
               </ion-item>
-        </th>
-      </tr>
-      <tr>
-        <td>
-            <ion-item>
-                <ion-label>Fecha de Inicio</ion-label>
-                <ion-datetime displayFormat="DD/MM/YYYY" max="2099-12-31" pickerFormat="DD MMMM YYYY" ></ion-datetime>
-              </ion-item>
-        </td>
-      </tr>
-      <tr>
-          <td>
               <ion-item>
-                  <ion-label>Fecha de Final</ion-label>
-                  <ion-datetime displayFormat="DD/MM/YYYY" max="2099-12-31" pickerFormat="DD MMMM YYYY" ></ion-datetime>
+                  <ion-label>Fecha de final</ion-label>
+                  <ion-datetime displayFormat="YYYY-MM-DD" min="{{this.tareaform.value.fecha_inicio}}" max="2030" pickerFormat="YYYY MM DD" formControlName="fecha_fin" [(ngModel)]="this.fecha_fin"></ion-datetime>
                 </ion-item>
-          </td>
-        </tr>
-      <tr>
-        <td>
+          <ion-item>
             <ion-label>Descripcion</ion-label>
-            <ion-textarea rows="5" name="description"></ion-textarea>
-        </td>
-      </tr>
+            <ion-textarea rows="5" formControlName="descripcion" value="{{this.descripcion}}"></ion-textarea>
+          </ion-item>
 
-        <tr>
-            <td>
-                <ion-item>
-                    <ion-label>Estado de la tarea</ion-label>
-                    <ion-select>
-                      <ion-option >Completada</ion-option>
-                      <ion-option >Cancelado</ion-option>
-                      <ion-option >Activo 3</ion-option>
-                    </ion-select>
-                  </ion-item>
-            </td>
-          </tr>
-        <tr>
-            <td>
-                <button ion-button color="primary" large block (click)="vercliente()">
-                    Guardar
-                   </button>
-            </td>
-          </tr>
-          <tr>
-              <td>
-                  <button ion-button color="primary" large block (click)="vercliente()">
-                      Eliminar
-                     </button>
-              </td>
-            </tr>
-    </table>
+          
+          <ion-item>
+              <ion-label>Activado</ion-label>
+            <ion-select formControlName="activado" [(ngModel)]="this.activado" >
+                <ion-option value="1">Activa</ion-option>
+                <ion-option value="2">Completa</ion-option>
+                <ion-option value="0">Incompleta</ion-option>
+              </ion-select>
+          </ion-item>
+          
+          <button ion-button large block type="submit" [disabled]="!tareaform.valid">Guardar</button>
+          <button ion-button large block (click)="deletetarea()">Borrar</button>
+        </form>
+  
   
   </ion-content>
   

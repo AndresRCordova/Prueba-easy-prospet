@@ -19,13 +19,17 @@ export class EditarproductoPage {
   private iddelproducto: number;
   public producto: any;
   public productoform : FormGroup;
+  public nombre: string;
+  public precio: number;
+  public descripcion:string;
   constructor(public navCtrl: NavController, public navParams: NavParams,private database: DatabaseProvider,private formBuilder: FormBuilder ) {
     this.iddelproducto=this.navParams.get('data');
     this.productoform = this.formBuilder.group({
-      nombre: ['this.productoform.value.nombre', Validators.required],
-      precio: ['this.productoform.value.precio', Validators.required],
-      descripcion: ['this.productoform.value.descripcion'],
+      nombre: ['', Validators.required],
+      precio: ['', Validators.required],
+      descripcion: [''],
     });
+   
   }
 
   ionViewWillEnter() {
@@ -34,11 +38,11 @@ export class EditarproductoPage {
   }
 
   getaproducto(){
-    this.database.getoneproducto(this.iddelproducto).then((data: any)=>{
-      console.log(data);
-      this.productoform.value.nombre=data[0].nombre;
-      this.productoform.value.precio=data[0].precio;
-      this.productoform.value.descripcion=data[0].descripcion;
+    this.database.getoneproducto(this.iddelproducto).then((pro: any)=>{
+      console.log(pro);
+      this.nombre=pro[0].nombre;
+      this.precio=pro[0].precio;
+      this.descripcion=pro[0].descripcion;
     },(error)=>{
       console.log(error);
     })
@@ -52,8 +56,14 @@ export class EditarproductoPage {
     this.navCtrl.pop();
   }
   actualizarproducto(){
-
+    this.database.updProducto(this.iddelproducto,this.productoform.value.nombre,this.productoform.value.precio,this.productoform.value.descripcion).then((data)=>{
+      console.log(data);
+    },(error)=>{
+      console.log(error);
+    });
+    this.navCtrl.pop();
   }
+  
 
 
 }

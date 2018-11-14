@@ -2,13 +2,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { EditarclientePage } from '../editarcliente/editarcliente'
 import { VerventasPage } from '../verventas/verventas';
+import { DatabaseProvider } from '../../providers/database/database';
 
-/**
- * Generated class for the VerclientesPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -16,26 +11,42 @@ import { VerventasPage } from '../verventas/verventas';
   templateUrl: 'verclientes.html',
 })
 export class VerclientesPage {
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  listclientes: any;
+  listprospectos: any;
+  Sclientes:boolean=true;
+  Sprospectos:boolean=true;
+  constructor(public navCtrl: NavController, public navParams: NavParams,private database: DatabaseProvider) {
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad VerclientesPage');
+  ionViewDidEnter() {
+    console.log('ionViewDidEnter VerclientesPage');
+    this.verclientes();
+    this.verprospectos();
   }
 
   verclientes(){
-
+    this.database.getclientes().then((data: any)=>{
+      console.log(data);
+      this.listclientes= data;
+    },(error)=>{
+      console.log(error);
+    })
   }
   verprospectos(){
-    
+    this.database.getprospectos().then((data: any)=>{
+      console.log(data);
+      this.listprospectos= data;
+    },(error)=>{
+      console.log(error);
+    })
   }
 
-  editarcliente(){
-    this.navCtrl.push(EditarclientePage);
+  editarcliente(idcliente){
+    this.navCtrl.push(EditarclientePage,{data: idcliente});
   }
   verventas(){
     this.navCtrl.push(VerventasPage);
   }
 
+  
 }

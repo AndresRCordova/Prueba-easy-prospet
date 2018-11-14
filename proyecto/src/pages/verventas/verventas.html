@@ -9,44 +9,68 @@
 
 
 <ion-content padding>
-    <ion-card>    
-        <ion-card-content>
-            <ion-item style="font-size: 30px">
-                Venta de contado 1
-                <button ion-button icon-only item-right clear (click)="verventasespecificas()">
-                    <ion-icon name='book' item-finish style="color: #422488"></ion-icon>
-                  </button>
-                  <button ion-button icon-only item-right clear (click)="registrarpago()">
-                      <ion-icon name='cash' item-finish style="color: #422488"></ion-icon>
-                    </button>
-                    <button ion-button icon-only item-right clear (click)="verpagos()">
-                        <ion-icon name='clipboard' item-finish style="color: #422488"></ion-icon>
-                      </button>
-                </ion-item>
-          <p>
-            datos de la venta general
-          </p>
-        </ion-card-content>
-      </ion-card>
+    <ion-item>
+        <ion-label>Ventas de Contado</ion-label>
+      <ion-toggle [(ngModel)]="Vcontado"></ion-toggle>
+    </ion-item>
+    
+    <ion-item>
+      <ion-label>Ventas A Meses</ion-label>
+      <ion-toggle [(ngModel)]="Vmeses"></ion-toggle>
+    </ion-item>
 
-      <ion-card>    
-          <ion-card-content>
-              <ion-item style="font-size: 30px">
-                  Venta a meses 1
-                  <button ion-button icon-only item-right clear (click)="verventasespecificas()">
-                      <ion-icon name='book' item-finish style="color: #422488"></ion-icon>
+  <ion-list *ngIf="Vcontado">
+      <ion-list-header>
+          Ventas de Contado
+        </ion-list-header>
+    <ion-item *ngFor="let venta of listcontado">
+        
+        <ion-item>
+            <button ion-button icon-only item-right clear (click)="verventasespecificas(venta.idGeneral)">
+                <ion-icon name='book' item-finish style="color: #422488"></ion-icon>
+              </button>
+              <button ion-button icon-only item-right clear (click)="registrarpago()">
+                  <ion-icon name='cash' item-finish style="color: #422488"></ion-icon>
+                </button>
+                <button ion-button icon-only item-right clear (click)="verpagos()">
+                    <ion-icon name='clipboard' item-finish style="color: #422488"></ion-icon>
+                  </button>
+          
+          <h2>Venta Numero: {{venta.idGeneral}}</h2>
+        <h3>fecha de venta {{venta.fecha}}</h3>
+        <h3>total de la venta {{venta.total}}</h3>
+        <h3>cliente de la venta <br> {{getnombrecliente(venta.idCliente)}}</h3>
+        </ion-item>
+      
+      </ion-item>
+    </ion-list>
+    <ion-list *ngIf="Vmeses">
+        <ion-list-header>
+            Ventas a Meses
+          </ion-list-header>
+      <ion-item *ngFor="let venta of listmeses">
+          
+          <ion-item>
+              <button ion-button icon-only item-right clear (click)="verventasespecificas(venta.idGeneral)">
+                  <ion-icon name='book' item-finish style="color: #422488"></ion-icon>
+                </button>
+                <button ion-button icon-only item-right clear (click)="registrarpago()">
+                    <ion-icon name='cash' item-finish style="color: #422488"></ion-icon>
+                  </button>
+                  <button ion-button icon-only item-right clear (click)="verpagos()">
+                      <ion-icon name='clipboard' item-finish style="color: #422488"></ion-icon>
                     </button>
-                    <button ion-button icon-only item-right clear (click)="registrarpago()">
-                        <ion-icon name='cash' item-finish style="color: #422488"></ion-icon>
-                      </button>
-                      <button ion-button icon-only item-right clear (click)="verpagos()">
-                          <ion-icon name='clipboard' item-finish style="color: #422488"></ion-icon>
-                        </button>
-                  </ion-item>
-            <p>
-              datos de la venta general
-            </p>
-          </ion-card-content>
-        </ion-card>
+            
+                    <h2>Venta Numero: {{venta.idGeneral}}</h2>
+                    <h3>fecha de venta {{venta.fecha}}</h3>
+                    <h3>total de la venta {{venta.total}}</h3>
+                    <h4>Numero de meses: {{venta.meses}}</h4>
+                    <h3>cliente de la venta <br> {{getnombrecliente(venta.idCliente)}}</h3>
+                    
+          </ion-item>
+        
+        </ion-item>
+      </ion-list>
+    
 
 </ion-content>
