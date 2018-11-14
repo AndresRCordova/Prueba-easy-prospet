@@ -32,6 +32,8 @@ export class DatabaseProvider {
         console.log('tabla de Ventas generales creada correctamente');
         db.executeSql("CREATE TABLE IF NOT EXISTS Venta_Especifica(idEspecifica INTEGER PRIMARY KEY AUTOINCREMENT,idGeneral INTEGER ,idProducto INTEGER NOT NULL,cantidad INTEGER NOT NULL);",[]);
         console.log('tabla de Ventas especificas creada correctamente');
+        db.executeSql("CREATE TABLE IF NOT EXISTS Pagos(idPago INTEGER PRIMARY KEY AUTOINCREMENT,idGeneral INTEGER NOT NULL,fecha_pago DATE NOT NULL,importe REAL NOT NULL,descripcion TEXT NOT NULL,pagado INTEGER NOT NULL);",[]);
+        console.log('tabla de pagos creada correctamente');
         this.isOpen = true;
         console.log('base de datos creada corretamente');
       }).catch((error) => {
@@ -40,6 +42,26 @@ export class DatabaseProvider {
     }
   }
 
+  createpago(idGeneral:number,fecha_pago:string,importe:number,descripcion:string){
+    return new Promise((resolve, reject) => {
+      let sql = "insert into Pagos (idGeneral,fecha_pago,importe,descripcion,pagado) values (?,?,?,?,1)";
+      this.db.executeSql(sql, [idGeneral,fecha_pago,importe,descripcion]).then((data) => {
+        resolve(data);
+      }, (error) => {
+        reject(error);
+      });
+    });
+  }
+  createpagopendiente(idGeneral:number,fecha_pago:string,importe:number,descripcion:string){
+    return new Promise((resolve, reject) => {
+      let sql = "insert into Pagos (idGeneral,fecha_pago,importe,descripcion,pagado) values (?,?,?,?,0)";
+      this.db.executeSql(sql, [idGeneral,fecha_pago,importe,descripcion]).then((data) => {
+        resolve(data);
+      }, (error) => {
+        reject(error);
+      });
+    });
+  }
   createventageneral(fecha:string,total:number,idTipoPago:number,idCliente:number,meses:number){
     return new Promise((resolve, reject) => {
       let sql = "insert into Venta_General (fecha,total,idTipoPago,idCliente,meses) values (?,?,?,?,?)";
@@ -74,6 +96,27 @@ export class DatabaseProvider {
   getventacontado(){
     return new Promise((resolve,reject) =>{
       this.db.executeSql("select * from Venta_General where idTipoPago=0",[]).then((data)=>{
+        let arrayproductos=[];
+        if(data.rows.length>0){
+          for(var i =0; i<data.rows.length;i++){
+            arrayproductos.push({
+              idGeneral: data.rows.item(i).idGeneral,
+              fecha: data.rows.item(i).fecha,
+              total: data.rows.item(i).total,
+              idCliente: data.rows.item(i).idCliente,
+              meses: data.rows.item(i).meses,
+            });
+          }
+        }
+        resolve(arrayproductos);
+      },(error)=>{
+        reject(error);
+      });
+    });
+  }
+  getaventa(idGeneral:number){
+    return new Promise((resolve,reject) =>{
+      this.db.executeSql("select * from Venta_General where idGeneral=?",[idGeneral]).then((data)=>{
         let arrayproductos=[];
         if(data.rows.length>0){
           for(var i =0; i<data.rows.length;i++){

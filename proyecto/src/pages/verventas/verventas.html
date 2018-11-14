@@ -29,10 +29,10 @@
             <button ion-button icon-only item-right clear (click)="verventasespecificas(venta.idGeneral)">
                 <ion-icon name='book' item-finish style="color: #422488"></ion-icon>
               </button>
-              <button ion-button icon-only item-right clear (click)="registrarpago()">
+              <button ion-button icon-only item-right clear (click)="registrarpago(venta.idGeneral)">
                   <ion-icon name='cash' item-finish style="color: #422488"></ion-icon>
                 </button>
-                <button ion-button icon-only item-right clear (click)="verpagos()">
+                <button ion-button icon-only item-right clear (click)="verpagos(venta.idGeneral)">
                     <ion-icon name='clipboard' item-finish style="color: #422488"></ion-icon>
                   </button>
           
@@ -54,9 +54,6 @@
               <button ion-button icon-only item-right clear (click)="verventasespecificas(venta.idGeneral)">
                   <ion-icon name='book' item-finish style="color: #422488"></ion-icon>
                 </button>
-                <button ion-button icon-only item-right clear (click)="registrarpago()">
-                    <ion-icon name='cash' item-finish style="color: #422488"></ion-icon>
-                  </button>
                   <button ion-button icon-only item-right clear (click)="verpagos()">
                       <ion-icon name='clipboard' item-finish style="color: #422488"></ion-icon>
                     </button>

@@ -29,9 +29,9 @@ export class NuevaVentaPage {
 
 
 
-  public añoactual:number = this.actual.getFullYear();
-  public mesactual:number=this.actual.getUTCMonth();
-  public diaactual:number=this.actual.getUTCDate();
+  public añoactual: number = this.actual.getFullYear();
+  public mesactual: number = this.actual.getUTCMonth();
+  public diaactual: number = this.actual.getUTCDate();
   constructor(public navCtrl: NavController, public navParams: NavParams, public database: DatabaseProvider, public formbuilder: FormBuilder) {
     this.ventaform = this.formbuilder.group({
       NumeroVenta: ['', Validators.required],
@@ -96,55 +96,161 @@ export class NuevaVentaPage {
   }
   createventa() {
     //crear venta general
-    if(this.diaactual<10){
-      this.fecha= this.añoactual+"-"+(this.mesactual+1)+"-0"+this.diaactual;
-    }else{
-      this.fecha= this.añoactual+"-"+(this.mesactual+1)+"-"+this.diaactual;
+    if (this.diaactual < 10) {
+      this.fecha = this.añoactual + "-" + (this.mesactual + 1) + "-0" + this.diaactual;
+    } else {
+      this.fecha = this.añoactual + "-" + (this.mesactual + 1) + "-" + this.diaactual;
     }
-    if(this.ventaform.value.meses==0){
+    if (this.ventaform.value.meses == 0) {
       //venta general de contado
-      console.log(this.fecha,this.total,0,this.ventaform.value.Cliente,0);
-      
-    this.database.createventageneral(this.fecha,this.total,0,this.ventaform.value.Cliente,0).then((data)=>{
-      console.log(data);
-    },(error)=>{
-      console.log(error);
-    });
-  }else{
-    //venta general a meses
-    console.log(this.fecha,this.total,1,this.ventaform.value.Cliente,this.ventaform.value.meses);
-    this.database.createventageneral(this.fecha,this.total,1,this.ventaform.value.Cliente,this.ventaform.value.meses).then((data)=>{
-      console.log(data);
-    },(error)=>{
-      console.log(error);
-    });
-  }
+      console.log(this.fecha, this.total, 0, this.ventaform.value.Cliente, 0);
 
-  //crear ventas especificas
-  var ip:number;
-  var cp:number;
-  for(let i in this.ventasespecificas){
+      this.database.createventageneral(this.fecha, this.total, 0, this.ventaform.value.Cliente, 0).then((data) => {
+        console.log(data);
+      }, (error) => {
+        console.log(error);
+      });
+    } else {
+      //venta general a meses
+      //console.log(this.fecha, this.total, 1, this.ventaform.value.Cliente, this.ventaform.value.meses);
+      this.database.createventageneral(this.fecha, this.total, 1, this.ventaform.value.Cliente, this.ventaform.value.meses).then((data) => {
+        console.log(data);
+      }, (error) => {
+        console.log(error);
+      });
+    }
+
+    //crear ventas especificas
+    var ip: number;
+    var cp: number;
+    for (let i in this.ventasespecificas) {
+
+      ip = this.prodid[i].id;
+      cp = this.cantidad[i].cantidad;
+      //console.log(this.numerodeventa, ip, cp);
+
+      this.database.createventaespecifica(this.numerodeventa, ip, cp).then((data) => {
+        console.log(data);
+      }, (error) => {
+        console.log(error);
+      });
+    }
+    //crear pagos pendientes si es a meses
+    if (this.ventaform.value.meses != 0) {
+      console.log("entro");
+      var pago: number;
+      var mes: number = 1;
+      var fecha2 = new Date(this.añoactual + "/" + (this.mesactual + 1) + "/" + this.diaactual);  //fecha actual para calcular futuras
+      var fechaf: string; //fecha final que ira en el query
+      var añofuturo: number;
+      var mesfuturo: number;
+      var diafuturo: number;
+      console.log(this.ventaform.value.meses);
+     if(this.ventaform.value.meses==3){
+      pago = this.total / 3;
+          while (mes <= 3) {
+            
+            if(mes==1){
+              console.log(this.numerodeventa,this.fecha,pago,"");
+              this.database.createpagopendiente(this.numerodeventa,this.fecha,pago,"").then((data) => {
+                console.log(data);
+              }, (error) => {
+                console.log(error);
+              });
+          }else{
+            fecha2.setDate(fecha2.getDate() + (30));
+            añofuturo = fecha2.getFullYear();
+            mesfuturo = fecha2.getUTCMonth() + 1;
+            diafuturo = fecha2.getUTCDate();
+            if (diafuturo < 10) {
+              fechaf = añofuturo + "-" + (mesfuturo) + "-0" + diafuturo;
+            } else {
+              fechaf = añofuturo + "-" + (mesfuturo) + "-" + diafuturo;
+            }
+            console.log(this.numerodeventa,fechaf,pago,"");
+            this.database.createpagopendiente(this.numerodeventa,fechaf,pago,"").then((data) => {
+              console.log(data);
+            }, (error) => {
+              console.log(error);
+            });
+          }
+            mes++;
+          }
+     }
+     if(this.ventaform.value.meses==6){
+      pago = this.total / 6;
+      while (mes <= 6) {
+        if(mes==1){
+          console.log(this.numerodeventa,this.fecha,pago,"");
+          this.database.createpagopendiente(this.numerodeventa,this.fecha,pago,"").then((data) => {
+            console.log(data);
+          }, (error) => {
+            console.log(error);
+          });
+      }else{
+        fecha2.setDate(fecha2.getDate() + (30));
+        añofuturo = fecha2.getFullYear();
+        mesfuturo = fecha2.getUTCMonth() + 1;
+        diafuturo = fecha2.getUTCDate();
+        if (diafuturo < 10) {
+          fechaf = añofuturo + "-" + (mesfuturo) + "-0" + diafuturo;
+        } else {
+          fechaf = añofuturo + "-" + (mesfuturo) + "-" + diafuturo;
+        }
+        console.log(this.numerodeventa,fechaf,pago,"");
+        this.database.createpagopendiente(this.numerodeventa,fechaf,pago,"").then((data) => {
+          console.log(data);
+        }, (error) => {
+          console.log(error);
+        });
+      }
+        mes++;
+      }
+     }
+     if(this.ventaform.value.meses==9){
+      pago = this.total / 9;
+          while (mes <= 9) {
+            
+            if(mes==1){
+              console.log(this.numerodeventa,this.fecha,pago,"");
+              this.database.createpagopendiente(this.numerodeventa,this.fecha,pago,"").then((data) => {
+                console.log(data);
+              }, (error) => {
+                console.log(error);
+              });
+          }else{
+            fecha2.setDate(fecha2.getDate() + (30));
+            añofuturo = fecha2.getFullYear();
+            mesfuturo = fecha2.getUTCMonth() + 1;
+            diafuturo = fecha2.getUTCDate();
+            if (diafuturo < 10) {
+              fechaf = añofuturo + "-" + (mesfuturo) + "-0" + diafuturo;
+            } else {
+              fechaf = añofuturo + "-" + (mesfuturo) + "-" + diafuturo;
+            }
+            console.log(this.numerodeventa,fechaf,pago,"");
+            this.database.createpagopendiente(this.numerodeventa,fechaf,pago,"").then((data) => {
+              console.log(data);
+            }, (error) => {
+              console.log(error);
+            });
+          }
+            mes++;
+          }
+     }
     
-    ip= this.prodid[i].id;
-    cp = this.cantidad[i].cantidad;
-    console.log(this.numerodeventa,ip,cp);
-    
-    this.database.createventaespecifica(this.numerodeventa,ip,cp).then((data)=>{
-      console.log(data);
-    },(error)=>{
-      console.log(error);
-    });
-  }
+
+    }
 
     console.log("venta creada satifactoriamente");
     this.navCtrl.pop();
   }
 
-  getprecio(productoid:number):number{
-    var precio:number;
-    for(let i in this.productos){
-      if(productoid==this.productos[i].idProducto){
-        precio=this.productos[i].precio;
+  getprecio(productoid: number): number {
+    var precio: number;
+    for (let i in this.productos) {
+      if (productoid == this.productos[i].idProducto) {
+        precio = this.productos[i].precio;
       }
     }
     return precio;
@@ -153,7 +259,7 @@ export class NuevaVentaPage {
     var c: number;
     var ix: number;
     var precio: number;
-    var sub:number=0;
+    var sub: number = 0;
 
     for (let i in this.ventasespecificas) {
       ix = this.prodid[i].id;
@@ -168,7 +274,7 @@ export class NuevaVentaPage {
       }
       sub += c * precio;
     }
-    this.total=sub;
+    this.total = sub;
   }
 
 
