@@ -135,6 +135,14 @@ export class NuevaVentaPage {
         console.log(error);
       });
     }
+    //crear un solo pago pendiente
+    if(this.ventaform.value.meses == 0 ){
+      this.database.createpagopendiente(this.numerodeventa,this.fecha,this.total,"").then((data) => {
+        console.log(data);
+      }, (error) => {
+        console.log(error);
+      });
+    }
     //crear pagos pendientes si es a meses
     if (this.ventaform.value.meses != 0) {
       console.log("entro");

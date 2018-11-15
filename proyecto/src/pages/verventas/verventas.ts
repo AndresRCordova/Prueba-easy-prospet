@@ -21,9 +21,11 @@ import { DatabaseProvider } from '../../providers/database/database';
 export class VerventasPage {
   public Vmeses: boolean=true;
   public Vcontado:boolean=true;
+  public Vterminada:boolean=true;
   public listmeses:any;
   public listcontado:any;
   public clientes:any;
+  public listterminada:any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,private database: DatabaseProvider) {
   }
@@ -32,6 +34,14 @@ export class VerventasPage {
     console.log('ionViewDidLoad VerventasPage');
     this.verventasmeses();
     this.verventascontado();
+    this.verventascompletada();
+    this.getclientes();
+  }
+  ionViewDidEnter() {
+    console.log('ionViewDidLoad VerventasPage');
+    this.verventasmeses();
+    this.verventascontado();
+    this.verventascompletada();
     this.getclientes();
   }
   verventasmeses(){
@@ -42,7 +52,14 @@ export class VerventasPage {
       console.log(error);
     })
   }
-
+  verventascompletada(){
+    this.database.getventaterminadas().then((data: any)=>{
+      console.log(data);
+      this.listterminada= data;
+    },(error)=>{
+      console.log(error);
+    })
+  }
   getnombrecliente(idcliente:number):string{
     var nombre:string;
     var paterno:string;
@@ -75,10 +92,7 @@ export class VerventasPage {
   verventasespecificas(idGeneral){
     this.navCtrl.push(VentasespecificasPage,{data: idGeneral});
   }
-  registrarpago(){
-    this.navCtrl.push(RegistrarpagoPage);
-  }
-  verpagos(){
-    this.navCtrl.push(VerpagosPage);
+  verpagos(idGeneral){
+    this.navCtrl.push(VerpagosPage,{data:idGeneral});
   }
 }

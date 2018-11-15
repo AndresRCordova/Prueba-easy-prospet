@@ -28,7 +28,7 @@ export class DatabaseProvider {
         console.log('tabla de tareas creada correctamente');
         db.executeSql("CREATE TABLE IF NOT EXISTS Notificaciones(idNotificacion INTEGER PRIMARY KEY AUTOINCREMENT,idTarea INTEGER NOT NULL,fecha_notificacion DATE NOT NULL,hora_notificacion TIME NOT NULL,descripcion TEXT NOT NULL);",[]);
         console.log('tabla de tareas creada correctamente');
-        db.executeSql("CREATE TABLE IF NOT EXISTS Venta_General(idGeneral INTEGER PRIMARY KEY AUTOINCREMENT,fecha DATE NOT NULL,total REAL NOT NULL,idTipoPago INTEGER NOT NULL,idCliente INTEGER NOT NULL,meses INTEGER NOT NULL);",[]);
+        db.executeSql("CREATE TABLE IF NOT EXISTS Venta_General(idGeneral INTEGER PRIMARY KEY AUTOINCREMENT,fecha DATE NOT NULL,total REAL NOT NULL,idTipoPago INTEGER NOT NULL,idCliente INTEGER NOT NULL,meses INTEGER NOT NULL,completada INTEGER NOT NULL);",[]);
         console.log('tabla de Ventas generales creada correctamente');
         db.executeSql("CREATE TABLE IF NOT EXISTS Venta_Especifica(idEspecifica INTEGER PRIMARY KEY AUTOINCREMENT,idGeneral INTEGER ,idProducto INTEGER NOT NULL,cantidad INTEGER NOT NULL);",[]);
         console.log('tabla de Ventas especificas creada correctamente');
@@ -42,6 +42,113 @@ export class DatabaseProvider {
     }
   }
 
+  realizarpago(idpago:number,idventa:number) {
+    return new Promise((resolve, reject) => {
+      let sql = "update Pagos set pagado=1 where Pagos.idPago=? AND Pagos.idGeneral=? ";
+      this.db.executeSql(sql,[idpago,idventa]).then((data) => {
+        resolve(data);
+      }, (error) => {
+        reject(error);
+      });
+    });
+  }
+  terminarventa(idventa:number) {
+    return new Promise((resolve, reject) => {
+      let sql = "update Venta_General set completada=1 where Venta_General.idGeneral=? ";
+      this.db.executeSql(sql,[idventa]).then((data) => {
+        resolve(data);
+      }, (error) => {
+        reject(error);
+      });
+    });
+  }
+  getpagospendientesdeunaventa(idventa:number){
+    return new Promise((resolve,reject) =>{
+      this.db.executeSql("select * from Pagos where idGeneral=? AND pagado=0",[idventa]).then((data)=>{
+        let arrayproductos=[];
+        if(data.rows.length>0){
+          for(var i =0; i<data.rows.length;i++){
+            arrayproductos.push({
+              idGeneral: data.rows.item(i).idGeneral,
+              idPago: data.rows.item(i).idPago,
+              fecha_pago: data.rows.item(i).fecha_pago,
+              importe: data.rows.item(i).importe,
+            });
+          }
+        }
+        else{
+          arrayproductos.push({
+            idGeneral: -1,
+          });
+        }
+        resolve(arrayproductos);
+      },(error)=>{
+        reject(error);
+      });
+    });
+  }
+  getpagospagadosdeunaventa(idventa:number){
+    return new Promise((resolve,reject) =>{
+      this.db.executeSql("select * from Pagos where idGeneral=? AND pagado=1",[idventa]).then((data)=>{
+        let arrayproductos=[];
+        if(data.rows.length>0){
+          for(var i =0; i<data.rows.length;i++){
+            arrayproductos.push({
+              idGeneral: data.rows.item(i).idGeneral,
+              idPago: data.rows.item(i).idPago,
+              fecha_pago: data.rows.item(i).fecha_pago,
+              importe: data.rows.item(i).importe,
+            });
+          }
+        }
+        resolve(arrayproductos);
+      },(error)=>{
+        reject(error);
+      });
+    });
+  }
+  getpagospendientes(){
+    return new Promise((resolve,reject) =>{
+      this.db.executeSql("select * from Pagos where pagado=0 ORDER BY DATE(fecha_pago) ASC",[]).then((data)=>{
+        let arrayproductos=[];
+        if(data.rows.length>0){
+          for(var i =0; i<data.rows.length;i++){
+            arrayproductos.push({
+              idGeneral: data.rows.item(i).idGeneral,
+              idPago: data.rows.item(i).idPago,
+              fecha_pago: data.rows.item(i).fecha_pago,
+              importe: data.rows.item(i).importe,
+            });
+          }
+        }
+        else{
+        }
+        resolve(arrayproductos);
+      },(error)=>{
+        reject(error);
+      });
+    });
+  }
+  getpagospagados(){
+    return new Promise((resolve,reject) =>{
+      this.db.executeSql("select * from Pagos where pagado=1 ORDER BY DATE(fecha_pago) ASC",[]).then((data)=>{
+        let arrayproductos=[];
+        if(data.rows.length>0){
+          for(var i =0; i<data.rows.length;i++){
+            arrayproductos.push({
+              idGeneral: data.rows.item(i).idGeneral,
+              idPago: data.rows.item(i).idPago,
+              fecha_pago: data.rows.item(i).fecha_pago,
+              importe: data.rows.item(i).importe,
+            });
+          }
+        }
+        resolve(arrayproductos);
+      },(error)=>{
+        reject(error);
+      });
+    });
+  }
   createpago(idGeneral:number,fecha_pago:string,importe:number,descripcion:string){
     return new Promise((resolve, reject) => {
       let sql = "insert into Pagos (idGeneral,fecha_pago,importe,descripcion,pagado) values (?,?,?,?,1)";
@@ -64,7 +171,7 @@ export class DatabaseProvider {
   }
   createventageneral(fecha:string,total:number,idTipoPago:number,idCliente:number,meses:number){
     return new Promise((resolve, reject) => {
-      let sql = "insert into Venta_General (fecha,total,idTipoPago,idCliente,meses) values (?,?,?,?,?)";
+      let sql = "insert into Venta_General (fecha,total,idTipoPago,idCliente,meses,completada) values (?,?,?,?,?,0)";
       this.db.executeSql(sql, [fecha,total,idTipoPago,idCliente,meses]).then((data) => {
         resolve(data);
       }, (error) => {
@@ -74,7 +181,7 @@ export class DatabaseProvider {
   }
   getventameses(){
     return new Promise((resolve,reject) =>{
-      this.db.executeSql("select * from Venta_General where idTipoPago=1",[]).then((data)=>{
+      this.db.executeSql("select * from Venta_General where idTipoPago=1 AND completada=0",[]).then((data)=>{
         let arrayproductos=[];
         if(data.rows.length>0){
           for(var i =0; i<data.rows.length;i++){
@@ -95,7 +202,28 @@ export class DatabaseProvider {
   }
   getventacontado(){
     return new Promise((resolve,reject) =>{
-      this.db.executeSql("select * from Venta_General where idTipoPago=0",[]).then((data)=>{
+      this.db.executeSql("select * from Venta_General where idTipoPago=0 AND completada=0",[]).then((data)=>{
+        let arrayproductos=[];
+        if(data.rows.length>0){
+          for(var i =0; i<data.rows.length;i++){
+            arrayproductos.push({
+              idGeneral: data.rows.item(i).idGeneral,
+              fecha: data.rows.item(i).fecha,
+              total: data.rows.item(i).total,
+              idCliente: data.rows.item(i).idCliente,
+              meses: data.rows.item(i).meses,
+            });
+          }
+        }
+        resolve(arrayproductos);
+      },(error)=>{
+        reject(error);
+      });
+    });
+  }
+  getventaterminadas(){
+    return new Promise((resolve,reject) =>{
+      this.db.executeSql("select * from Venta_General where completada=1",[]).then((data)=>{
         let arrayproductos=[];
         if(data.rows.length>0){
           for(var i =0; i<data.rows.length;i++){

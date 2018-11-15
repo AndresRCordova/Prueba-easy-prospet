@@ -12,6 +12,7 @@ import {VerpagosPage} from '../verpagos/verpagos';
 import {VerproductoPage} from '../verproducto/verproducto';
 import {NuevoproductoPage} from '../nuevoproducto/nuevoproducto'
 import { DatabaseProvider } from '../../providers/database/database';
+import { RegistrarpagoPage } from '../registrarpago/registrarpago';
 
 @Component({
   selector: 'page-home',
@@ -45,7 +46,7 @@ export class HomePage {
     this.navCtrl.push(NuevaVentaPage);
   }
   verpagos(){
-    this.navCtrl.push(VerpagosPage);
+    this.navCtrl.push(RegistrarpagoPage);
   }
   nuevoproducto(){
     this.navCtrl.push(NuevoproductoPage);

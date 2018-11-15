@@ -1,52 +1,55 @@
 
 <ion-header>
 
-    <ion-navbar color="secondary">
-      <ion-title>Registrar pago</ion-title>
+    <ion-navbar>
+      <ion-title>ver pagos</ion-title>
     </ion-navbar>
   
   </ion-header>
   
   
+  
   <ion-content padding>
-      <table align="center" style="width: 100%;">
-          <tr>
-            <td>
-                <ion-item>
-                    <ion-label>Fecha de Pago</ion-label>
-                    <ion-datetime displayFormat="DD/MM/YYYY" max="2099-12-31" pickerFormat="DD MMMM YYYY" ></ion-datetime>
-                  </ion-item>
-            </td>
-          </tr>
-          <tr>
-              <td>
-                  <ion-item>
-                      <ion-label>Hora de Pago</ion-label>
-                      <ion-datetime displayFormat="h:m a"  pickerFormat="h:m a" ></ion-datetime>
-                    </ion-item>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <ion-item>
-                    <ion-input type="number" placeholder="cantidad"></ion-input>
-                  </ion-item>
-            </td>
-          </tr>
-          <tr>
-            <td>
-                <ion-label>Descripcion</ion-label>
-                <ion-textarea rows="5" name="description"></ion-textarea>
-            </td>
-          </tr>
-            <tr>
-                <td>
-                    <button ion-button color="primary" large block >
-                        Guardar
-                       </button>
-                </td>
-              </tr>
-        </table>
+      <ion-item>
+          <ion-label>Pagos Pendientes</ion-label>
+        <ion-toggle [(ngModel)]="vppendientes"></ion-toggle>
+      </ion-item>
       
+      <ion-item>
+        <ion-label>Pagos Realizados</ion-label>
+        <ion-toggle [(ngModel)]="vppagado"></ion-toggle>
+      </ion-item>
+  
+    <ion-list *ngIf="vppendientes">
+        <ion-list-header>
+            Pagos Pendientes
+          </ion-list-header>
+      <ion-item *ngFor="let venta of pagospendientes">
+          
+          <ion-item>
+            <h2>Numero de venta: {{venta.idGeneral}}</h2>
+          <h3>Numero de pago: {{venta.idPago}}</h3>
+          <h3>Importe a pagar: ${{venta.importe}}</h3>
+          <h3> {{venta.fecha_pago}}</h3>
+          </ion-item>
+        
+        </ion-item>
+      </ion-list>
+      <ion-list *ngIf="vppagado">
+          <ion-list-header>
+              Pagos Realizados
+            </ion-list-header>
+        <ion-item *ngFor="let venta of pagospagados">
+            
+            <ion-item>
+              
+              <h2>Numero de venta: {{venta.idGeneral}}</h2>
+            <h3>Numero de pago: {{venta.idPago}}</h3>
+            <h3>Importe a pagar: ${{venta.importe}}</h3>
+            <h3> {{venta.fecha_pago}}</h3>
+            </ion-item>
+          
+          </ion-item>
+        </ion-list>
   </ion-content>
   

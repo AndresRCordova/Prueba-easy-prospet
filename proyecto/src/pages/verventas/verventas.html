@@ -18,6 +18,10 @@
       <ion-label>Ventas A Meses</ion-label>
       <ion-toggle [(ngModel)]="Vmeses"></ion-toggle>
     </ion-item>
+    <ion-item>
+      <ion-label>Ventas Terminadas</ion-label>
+      <ion-toggle [(ngModel)]="Vterminada"></ion-toggle>
+    </ion-item>
 
   <ion-list *ngIf="Vcontado">
       <ion-list-header>
@@ -29,9 +33,6 @@
             <button ion-button icon-only item-right clear (click)="verventasespecificas(venta.idGeneral)">
                 <ion-icon name='book' item-finish style="color: #422488"></ion-icon>
               </button>
-              <button ion-button icon-only item-right clear (click)="registrarpago(venta.idGeneral)">
-                  <ion-icon name='cash' item-finish style="color: #422488"></ion-icon>
-                </button>
                 <button ion-button icon-only item-right clear (click)="verpagos(venta.idGeneral)">
                     <ion-icon name='clipboard' item-finish style="color: #422488"></ion-icon>
                   </button>
@@ -54,7 +55,31 @@
               <button ion-button icon-only item-right clear (click)="verventasespecificas(venta.idGeneral)">
                   <ion-icon name='book' item-finish style="color: #422488"></ion-icon>
                 </button>
-                  <button ion-button icon-only item-right clear (click)="verpagos()">
+                  <button ion-button icon-only item-right clear (click)="verpagos(venta.idGeneral)">
+                      <ion-icon name='clipboard' item-finish style="color: #422488"></ion-icon>
+                    </button>
+            
+                    <h2>Venta Numero: {{venta.idGeneral}}</h2>
+                    <h3>fecha de venta {{venta.fecha}}</h3>
+                    <h3>total de la venta {{venta.total}}</h3>
+                    <h4>Numero de meses: {{venta.meses}}</h4>
+                    <h3>cliente de la venta <br> {{getnombrecliente(venta.idCliente)}}</h3>
+                    
+          </ion-item>
+        
+        </ion-item>
+      </ion-list>
+      <ion-list *ngIf="Vterminada">
+        <ion-list-header>
+            Ventas Terminadas
+          </ion-list-header>
+      <ion-item *ngFor="let venta of listterminada">
+          
+          <ion-item>
+              <button ion-button icon-only item-right clear (click)="verventasespecificas(venta.idGeneral)">
+                  <ion-icon name='book' item-finish style="color: #422488"></ion-icon>
+                </button>
+                  <button ion-button icon-only item-right clear (click)="verpagos(venta.idGeneral)">
                       <ion-icon name='clipboard' item-finish style="color: #422488"></ion-icon>
                     </button>
             
