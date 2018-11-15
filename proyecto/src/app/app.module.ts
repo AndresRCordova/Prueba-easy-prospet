@@ -26,7 +26,8 @@ import {NuevoproductoPage} from '../pages/nuevoproducto/nuevoproducto';
 import { SQLite} from '@ionic-native/sqlite';
 import { DatabaseProvider } from '../providers/database/database';
 import { HttpModule } from '@angular/http';
-import { LocalNotifications } from '@ionic-native/local-notifications'
+import { LocalNotifications } from '@ionic-native/local-notifications';
+import { NgCalendarModule } from 'ionic2-calendar';
 
 
 @NgModule({
@@ -52,6 +53,7 @@ import { LocalNotifications } from '@ionic-native/local-notifications'
     NuevoproductoPage
   ],
   imports: [
+    NgCalendarModule,
     BrowserModule,
     HttpModule,
     IonicModule.forRoot(MyApp)

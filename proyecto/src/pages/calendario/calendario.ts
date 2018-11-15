@@ -1,12 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
-/**
- * Generated class for the CalendarioPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+
 
 @IonicPage()
 @Component({
@@ -14,12 +9,26 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'calendario.html',
 })
 export class CalendarioPage {
+  eventSource=[];
+  selectedDate=new Date();
+  viewTitle:string;
+
+  calendar={
+    mode:'month',
+    currentDate:this.selectedDate,
+    locale:'en-GB',
+  }
+
+
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad CalendarioPage');
+  }
+  onviewtitlechanged(title){
+    this.viewTitle=title;
   }
 
 }
