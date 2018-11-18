@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,AlertController} from 'ionic-angular';
 import { DatabaseProvider } from '../../providers/database/database';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 
@@ -32,7 +32,7 @@ export class NuevaVentaPage {
   public añoactual: number = this.actual.getFullYear();
   public mesactual: number = this.actual.getUTCMonth();
   public diaactual: number = this.actual.getUTCDate();
-  constructor(public navCtrl: NavController, public navParams: NavParams, public database: DatabaseProvider, public formbuilder: FormBuilder) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public database: DatabaseProvider, public formbuilder: FormBuilder,public alerta:AlertController) {
     this.ventaform = this.formbuilder.group({
       NumeroVenta: ['', Validators.required],
       Cliente: ['', Validators.required],
@@ -93,6 +93,19 @@ export class NuevaVentaPage {
     this.ventasespecificas.splice(this.ventasespecificas.length - 1, 1);
     this.cantidad.splice(this.cantidad.length - 1, 1);
     this.prodid.splice(this.cantidad.length - 1, 1);
+  }
+  showAlertcreado() {
+    const alert = this.alerta.create({
+      title: 'Venta y pagos Agregados',
+      subTitle: 'Una nueva venta a sido creada y agregada',
+      buttons: [{
+        text: 'Ok',
+        handler: () => {
+          this.navCtrl.pop();
+        }
+      }]
+    });
+    alert.present();
   }
   createventa() {
     //crear venta general
@@ -251,7 +264,7 @@ export class NuevaVentaPage {
     }
 
     console.log("venta creada satifactoriamente");
-    this.navCtrl.pop();
+    this.showAlertcreado();
   }
 
   getprecio(productoid: number): number {

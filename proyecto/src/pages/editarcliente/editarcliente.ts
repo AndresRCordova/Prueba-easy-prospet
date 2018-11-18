@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { DatabaseProvider } from '../../providers/database/database';
 import {Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { AlertController } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -17,7 +18,7 @@ export class EditarclientePage {
   correo:string;
   telefono: number;
   estatus: number;
-  constructor(public navCtrl: NavController, public navParams: NavParams,private database: DatabaseProvider,private formBuilder: FormBuilder) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,private database: DatabaseProvider,private formBuilder: FormBuilder,public alertCtrl: AlertController) {
     this.iddelcliente=this.navParams.get('data');
     this.clienteform = this.formBuilder.group({
       nombre: ['', Validators.required],
@@ -64,5 +65,48 @@ export class EditarclientePage {
     });
     this.navCtrl.pop();
   }
-
+  showConfirmedit() {
+    const confirm = this.alertCtrl.create({
+      title: '¿Seguro de editar este cliente?',
+      message: 'El cliente sera editado',
+      buttons: [
+        {
+          text: 'No',
+          handler: () => {
+            console.log('Disagree clicked');
+          }
+        },
+        {
+          text: 'Si',
+          handler: () => {
+            console.log('Agree clicked');
+            this.actualizarcliente();
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
+  showConfirmedelete() {
+    const confirm = this.alertCtrl.create({
+      title: '¿Seguro de Borrar este cliente?',
+      message: 'El cliente sera borrado',
+      buttons: [
+        {
+          text: 'No',
+          handler: () => {
+            console.log('Disagree clicked');
+          }
+        },
+        {
+          text: 'Si',
+          handler: () => {
+            console.log('Agree clicked');
+            this.deletecliente();
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
 }

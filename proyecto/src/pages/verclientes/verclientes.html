@@ -6,6 +6,7 @@
 
 </ion-header>
 
+
 <ion-content padding>
   <ion-item>
     <ion-label>Clientes</ion-label>
@@ -25,7 +26,7 @@
           <button ion-button icon-only item-right clear (click)="editarcliente(cliente.idCliente)">
               <ion-icon name='brush' item-finish style="color: #d03e84;"></ion-icon>
             </button>
-            <button ion-button icon-only item-right clear (click)="verventas()">
+            <button ion-button icon-only item-right clear (click)="verventas(cliente.idCliente)">
               <ion-icon name='cart' item-finish style="color: #d03e84;"></ion-icon>
             </button>
           <h2>{{cliente.nombre}}</h2>
@@ -51,7 +52,7 @@
               <button ion-button icon-only item-right clear (click)="editarcliente(Prospectos.idCliente)">
                   <ion-icon name='brush' item-finish style="color: #d03e84;"></ion-icon>
                 </button>
-                <button ion-button icon-only item-right clear (click)="verventas()">
+                <button ion-button icon-only item-right clear (click)="verventas(Prospectos.idCliente)">
                   <ion-icon name='cart' item-finish style="color: #d03e84;"></ion-icon>
                 </button>
                <ion-item *ngIf="Prospectos.estatus==1"> 

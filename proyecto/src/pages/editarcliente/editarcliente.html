@@ -6,7 +6,7 @@
     </ion-navbar>
   </ion-header>
   <ion-content padding>
-      <form [formGroup]="clienteform" (ngSubmit)="actualizarcliente()">
+      <form [formGroup]="clienteform" (ngSubmit)="showConfirmedit()">
           <ion-item>
             <ion-label>Nombre</ion-label>
             <ion-input type="text" formControlName="nombre" value="{{this.nombre}}"></ion-input>
@@ -38,7 +38,7 @@
           </ion-item>
       
           <button ion-button large block type="submit" [disabled]="!clienteform.valid">Guardar</button>
-          <button ion-button large block (click)="deletecliente()">Borrar</button>
+          <button type="button" ion-button large block (click)="showConfirmedelete()">Borrar</button>
         </form>
   </ion-content>
   

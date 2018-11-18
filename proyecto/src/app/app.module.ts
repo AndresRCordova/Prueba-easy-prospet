@@ -11,6 +11,7 @@ import { NuevaTareaPage } from '../pages/nueva-tarea/nueva-tarea';
 import { NuevaNotificacionPage } from '../pages/nueva-notificacion/nueva-notificacion';
 import { CalendarioPage } from '../pages/calendario/calendario';
 import { VerclientesPage } from '../pages/verclientes/verclientes';
+import {NuevoPagoPage } from '../pages/nuevo-pago/nuevo-pago'
 import { VertareasPage } from '../pages/vertareas/vertareas';
 import { VerventasPage } from '../pages/verventas/verventas';
 import { EditarclientePage } from '../pages/editarcliente/editarcliente';
@@ -35,6 +36,7 @@ import { NgCalendarModule } from 'ionic2-calendar';
     MyApp,
     HomePage,
     NuevoClientePage,
+    NuevoPagoPage,
     NuevaTareaPage,
     NuevaNotificacionPage,
     CalendarioPage,
@@ -68,6 +70,7 @@ import { NgCalendarModule } from 'ionic2-calendar';
     CalendarioPage,
     VerclientesPage,
     VertareasPage,
+   NuevoPagoPage,
     VerventasPage,
     EditarclientePage,
     EditartareaPage,

@@ -41,6 +41,69 @@ export class DatabaseProvider {
       })
     }
   }
+  getventamesesdeuncliente(idCliente:number){
+    return new Promise((resolve,reject) =>{
+      this.db.executeSql("select * from Venta_General where idTipoPago=1 AND completada=0 AND idCliente=?",[idCliente]).then((data)=>{
+        let arrayproductos=[];
+        if(data.rows.length>0){
+          for(var i =0; i<data.rows.length;i++){
+            arrayproductos.push({
+              idGeneral: data.rows.item(i).idGeneral,
+              fecha: data.rows.item(i).fecha,
+              total: data.rows.item(i).total,
+              idCliente: data.rows.item(i).idCliente,
+              meses: data.rows.item(i).meses,
+            });
+          }
+        }
+        resolve(arrayproductos);
+      },(error)=>{
+        reject(error);
+      });
+    });
+  }
+  getventacontadodeuncliente(idCliente:number){
+    return new Promise((resolve,reject) =>{
+      this.db.executeSql("select * from Venta_General where idTipoPago=0 AND completada=0 AND idCliente=?",[idCliente]).then((data)=>{
+        let arrayproductos=[];
+        if(data.rows.length>0){
+          for(var i =0; i<data.rows.length;i++){
+            arrayproductos.push({
+              idGeneral: data.rows.item(i).idGeneral,
+              fecha: data.rows.item(i).fecha,
+              total: data.rows.item(i).total,
+              idCliente: data.rows.item(i).idCliente,
+              meses: data.rows.item(i).meses,
+            });
+          }
+        }
+        resolve(arrayproductos);
+      },(error)=>{
+        reject(error);
+      });
+    });
+  }
+  getventaterminadasdeuncliente(idCliente:number){
+    return new Promise((resolve,reject) =>{
+      this.db.executeSql("select * from Venta_General where completada=1 AND idCliente=?",[idCliente]).then((data)=>{
+        let arrayproductos=[];
+        if(data.rows.length>0){
+          for(var i =0; i<data.rows.length;i++){
+            arrayproductos.push({
+              idGeneral: data.rows.item(i).idGeneral,
+              fecha: data.rows.item(i).fecha,
+              total: data.rows.item(i).total,
+              idCliente: data.rows.item(i).idCliente,
+              meses: data.rows.item(i).meses,
+            });
+          }
+        }
+        resolve(arrayproductos);
+      },(error)=>{
+        reject(error);
+      });
+    });
+  }
 
   realizarpago(idpago:number,idventa:number) {
     return new Promise((resolve, reject) => {

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams ,AlertController} from 'ionic-angular';
 import { DatabaseProvider } from '../../providers/database/database';
 
 
@@ -17,7 +17,7 @@ export class VerpagosPage {
   public vppagado:boolean=true;
   public terminada:boolean=false;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,private database: DatabaseProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,private database: DatabaseProvider,private alerta: AlertController) {
     this.idgeneral=this.navParams.get('data');
     console.log(this.idgeneral);
   }
@@ -56,7 +56,7 @@ export class VerpagosPage {
      },(error)=>{
        console.log(error);
      });
-     
+     this.showAlertRealizarPago();
      this.getpagospendientes();
      this.getpagospagados();
   }
@@ -66,6 +66,31 @@ export class VerpagosPage {
      },(error)=>{
        console.log(error);
      });
-     this.navCtrl.pop();
+     this.showAlertterminarventa();
+     
+  }
+  showAlertRealizarPago() {
+    const alert = this.alerta.create({
+      title: 'Pago realizado',
+      subTitle: 'El pago a sido realizado con exito',
+      buttons: [{
+        text: 'Ok',
+        handler: () => {
+        }
+      }]
+    });
+    alert.present();
+  }
+  showAlertterminarventa() {
+    const alert = this.alerta.create({
+      title: 'Venta terminada',
+      subTitle: 'La venta a sido terminada con exito',
+      buttons: [{
+        text: 'Ok',
+        handler: () => {
+        }
+      }]
+    });
+    alert.present();
   }
 }

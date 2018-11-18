@@ -5,7 +5,7 @@
     </ion-navbar>
   </ion-header>
   <ion-content padding>
-      <form [formGroup]="tareaform" (ngSubmit)="actualizartarea()">
+      <form [formGroup]="tareaform" (ngSubmit)="showConfirmedit()">
           <ion-item>
             <ion-label>Titulo de la tarea</ion-label>
             <ion-input type="text" formControlName="titulo" value="{{this.titulo}}"></ion-input>
@@ -38,9 +38,10 @@
           </ion-item>
           
           <button ion-button large block type="submit" [disabled]="!tareaform.valid">Guardar</button>
-          <button ion-button large block (click)="deletetarea()">Borrar</button>
+          <button  type="button" ion-button large block (click)="showConfirmedelete()">Borrar</button>
         </form>
   
   
   </ion-content>
+
   

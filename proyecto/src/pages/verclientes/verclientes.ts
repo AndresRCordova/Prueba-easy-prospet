@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { EditarclientePage } from '../editarcliente/editarcliente'
 import { VerventasPage } from '../verventas/verventas';
 import { DatabaseProvider } from '../../providers/database/database';
+import { NuevoPagoPage } from '../nuevo-pago/nuevo-pago';
 
 
 @IonicPage()
@@ -24,6 +25,7 @@ export class VerclientesPage {
     this.verprospectos();
   }
 
+
   verclientes(){
     this.database.getclientes().then((data: any)=>{
       console.log(data);
@@ -44,8 +46,8 @@ export class VerclientesPage {
   editarcliente(idcliente){
     this.navCtrl.push(EditarclientePage,{data: idcliente});
   }
-  verventas(){
-    this.navCtrl.push(VerventasPage);
+  verventas(idcliente){
+    this.navCtrl.push(NuevoPagoPage,{data:idcliente});
   }
 
   

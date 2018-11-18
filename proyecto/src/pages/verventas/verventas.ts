@@ -89,6 +89,7 @@ export class VerventasPage {
       console.log(error);
     })
   }
+  
   verventasespecificas(idGeneral){
     this.navCtrl.push(VentasespecificasPage,{data: idGeneral});
   }

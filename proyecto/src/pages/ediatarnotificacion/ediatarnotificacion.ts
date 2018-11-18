@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { DatabaseProvider } from '../../providers/database/database';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { LocalNotifications } from '@ionic-native/local-notifications';
+import { AlertController } from 'ionic-angular';
 @IonicPage()
 @Component({
   selector: 'page-ediatarnotificacion',
@@ -16,7 +17,7 @@ export class EdiatarnotificacionPage {
   public fechaN: any;
   public horaN: any;
   public descripcionN: any;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public database: DatabaseProvider, public formbuilder: FormBuilder, public lN: LocalNotifications, public plat: Platform) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public database: DatabaseProvider, public formbuilder: FormBuilder, public lN: LocalNotifications, public plat: Platform,public alertCtrl: AlertController) {
     this.idTarea = this.navParams.get('data');
     this.notificacionforma = this.formbuilder.group({
       titulotarea: ['', Validators.required],
@@ -24,6 +25,51 @@ export class EdiatarnotificacionPage {
       hora: ['', Validators.required],
       descripcion: ['', Validators.required]
     });
+  }
+
+  showConfirmedit() {
+    const confirm = this.alertCtrl.create({
+      title: '¿Seguro de editar la notificacion?',
+      message: 'La notificacion sera editada',
+      buttons: [
+        {
+          text: 'No',
+          handler: () => {
+            console.log('Disagree clicked');
+          }
+        },
+        {
+          text: 'Si',
+          handler: () => {
+            console.log('Agree clicked');
+            this.actualizanotificacion();
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
+  showConfirmedelete() {
+    const confirm = this.alertCtrl.create({
+      title: '¿Seguro de Borrar la notificacion?',
+      message: 'La notificacion sera borrada',
+      buttons: [
+        {
+          text: 'No',
+          handler: () => {
+            console.log('Disagree clicked');
+          }
+        },
+        {
+          text: 'Si',
+          handler: () => {
+            console.log('Agree clicked');
+            this.deleteNotificacion();
+          }
+        }
+      ]
+    });
+    confirm.present();
   }
 
   ionViewDidLoad() {

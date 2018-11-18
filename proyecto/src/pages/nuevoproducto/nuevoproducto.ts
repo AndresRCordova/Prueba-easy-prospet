@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController} from 'ionic-angular';
 import { DatabaseProvider } from '../../providers/database/database';
 import {Validators, FormBuilder, FormGroup } from '@angular/forms';
 
@@ -19,12 +19,25 @@ export class NuevoproductoPage {
 
   public productoform : FormGroup;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private database: DatabaseProvider,private formBuilder: FormBuilder) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private database: DatabaseProvider,private formBuilder: FormBuilder,public alerta:AlertController) {
     this.productoform = this.formBuilder.group({
       nombre: ['', Validators.required],
       precio: ['', Validators.required],
       descripcion: [''],
     });
+  }
+  showAlertcreado() {
+    const alert = this.alerta.create({
+      title: 'Producto Agregado',
+      subTitle: 'Un nuevo Producto a sido creado y agregado',
+      buttons: [{
+        text: 'Ok',
+        handler: () => {
+          this.navCtrl.pop();
+        }
+      }]
+    });
+    alert.present();
   }
 
   ionViewDidLoad() {
@@ -39,7 +52,7 @@ export class NuevoproductoPage {
     },(error)=>{
       console.log(error);
     });
-    this.navCtrl.pop();
+    this.showAlertcreado();
   }
 
   

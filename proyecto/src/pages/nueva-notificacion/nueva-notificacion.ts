@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform,AlertController} from 'ionic-angular';
 import { DatabaseProvider } from '../../providers/database/database';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { LocalNotifications } from '@ionic-native/local-notifications';
@@ -25,7 +25,7 @@ export class NuevaNotificacionPage {
   public fechaactual: string = this.actual.toISOString();
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public database: DatabaseProvider, public formbuilder: FormBuilder, public lN: LocalNotifications, public plat: Platform) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public database: DatabaseProvider, public formbuilder: FormBuilder, public lN: LocalNotifications, public plat: Platform,public alerta:AlertController) {
     this.notificacionforma = this.formbuilder.group({
       titulotarea: ['', Validators.required],
       fecha: ['', Validators.required],
@@ -47,6 +47,19 @@ export class NuevaNotificacionPage {
     }, (error) => {
       console.log(error);
     })
+  }
+  showAlertcreado() {
+    const alert = this.alerta.create({
+      title: 'Notificacion Agregada',
+      subTitle: 'Una nueva notificacion a sido creada y agregada',
+      buttons: [{
+        text: 'Ok',
+        handler: () => {
+          this.navCtrl.pop();
+        }
+      }]
+    });
+    alert.present();
   }
   
   crearnotificacion() {
@@ -84,6 +97,6 @@ export class NuevaNotificacionPage {
         console.log(error);
       });
     });
-    this.navCtrl.pop();
+    this.showAlertcreado();
   }
 }

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { DatabaseProvider } from '../../providers/database/database';
 import {Validators, FormBuilder, FormGroup } from '@angular/forms';
-
+import { AlertController } from 'ionic-angular';
 /**
  * Generated class for the EditarproductoPage page.
  *
@@ -22,7 +22,7 @@ export class EditarproductoPage {
   public nombre: string;
   public precio: number;
   public descripcion:string;
-  constructor(public navCtrl: NavController, public navParams: NavParams,private database: DatabaseProvider,private formBuilder: FormBuilder ) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,private database: DatabaseProvider,private formBuilder: FormBuilder,public alertCtrl: AlertController) {
     this.iddelproducto=this.navParams.get('data');
     this.productoform = this.formBuilder.group({
       nombre: ['', Validators.required],
@@ -63,7 +63,50 @@ export class EditarproductoPage {
     });
     this.navCtrl.pop();
   }
-  
+  showConfirmedit() {
+    const confirm = this.alertCtrl.create({
+      title: '¿Seguro de editar este producto?',
+      message: 'El producto sera editado',
+      buttons: [
+        {
+          text: 'No',
+          handler: () => {
+            console.log('Disagree clicked');
+          }
+        },
+        {
+          text: 'Si',
+          handler: () => {
+            console.log('Agree clicked');
+            this.actualizarproducto();
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
+  showConfirmedelete() {
+    const confirm = this.alertCtrl.create({
+      title: '¿Seguro de Borrar este producto?',
+      message: 'El producto sera borrado',
+      buttons: [
+        {
+          text: 'No',
+          handler: () => {
+            console.log('Disagree clicked');
+          }
+        },
+        {
+          text: 'Si',
+          handler: () => {
+            console.log('Agree clicked');
+            this.deleteproduto();
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
 
 
 }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,AlertController } from 'ionic-angular';
 import { DatabaseProvider } from '../../providers/database/database';
 import {Validators, FormBuilder, FormGroup } from '@angular/forms';
 
@@ -19,7 +19,7 @@ export class NuevaTareaPage {
   public activado:boolean=true;
   
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private database: DatabaseProvider,private formBuilder: FormBuilder) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private database: DatabaseProvider,private formBuilder: FormBuilder,private alerta:AlertController) {
     this.tareaform = this.formBuilder.group({
       titulo: ['', Validators.required],
       fecha_creacion: ['', Validators.required],
@@ -28,6 +28,20 @@ export class NuevaTareaPage {
       descripcion: ['', Validators.required],
       activado:['', Validators.required]
     });
+  }
+
+  showAlert() {
+    const alert = this.alerta.create({
+      title: 'Tarea agregada!',
+      subTitle: 'Una nueva tarea a sido creada y agregada',
+      buttons: [{
+        text: 'Ok',
+        handler: () => {
+          this.navCtrl.pop();
+        }
+      }]
+    });
+    alert.present();
   }
 
 
@@ -49,7 +63,7 @@ export class NuevaTareaPage {
     },(error)=>{
       console.log(error);
     });
-    this.navCtrl.pop();
+    this.showAlert();
   }else{
     console.log(this.tareaform.value.titulo,this.fecha,this.tareaform.value.fecha_inicio,this.tareaform.value.fecha_fin,this.tareaform.value.descripcion,0,0);
     this.database.createtarea(this.tareaform.value.titulo,this.fecha,this.tareaform.value.fecha_inicio,this.tareaform.value.fecha_fin,this.tareaform.value.descripcion,0,0).then((data)=>{
@@ -57,7 +71,8 @@ export class NuevaTareaPage {
     },(error)=>{
       console.log(error);
     });
-    this.navCtrl.pop();
+//lanzar alerta de creacion de tarea
+    this.showAlert();
   }
 }
 }
