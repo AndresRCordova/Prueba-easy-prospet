@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-navbar color="secondary">
+        <ion-buttons>
+          <button ion-button >
+              <ion-icon name="create" style="font-size: 30px"></ion-icon>
+            </button>
+            <button ion-button >
+                <ion-icon name="person-add" style="font-size: 30px"></ion-icon>
+              </button>
+                <button ion-button >
+                    <ion-icon name="notifications" style="font-size: 30px"></ion-icon>
+                  </button>
+                  <button ion-button icon-only >
+                      <ion-icon name="cart" style="font-size: 30px"></ion-icon>
+                    </button>
+                    <button ion-button icon-only (click)="nuevoproducto()">
+                        <ion-icon name="briefcase" style="font-size: 30px"></ion-icon>
+                      </button>
+        </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  
+  <div align="center">
+
+      <h1>Menu</h1>
+    <ion-img width="150" height="150" src="../assets/imgs/nl.png"></ion-img>
+  </div>
+  <div style="margin: auto;
+  width: 100%;
+  padding: 50px;">
+  <ion-list>
+      <button ion-button color="primary" medium block >
+       Clientes
+      </button>
+      <button ion-button color="primary" medium block >          
+        Tareas
+      </button>
+      <button ion-button color="primary" medium block >
+        Ventas
+      </button>
+      <button ion-button color="primary" medium block >
+        Calendario
+        </button>
+        <button ion-button color="primary" medium block >
+           Pagos
+        </button> 
+        <button ion-button color="primary" medium block >
+            Productos
+         </button>
+    </ion-list>
+    </div>
+</ion-content>
+

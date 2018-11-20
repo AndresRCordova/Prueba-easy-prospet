@@ -16,7 +16,7 @@ import {Validators, FormBuilder, FormGroup } from '@angular/forms';
   templateUrl: 'nuevoproducto.html',
 })
 export class NuevoproductoPage {
-
+ 
   public productoform : FormGroup;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private database: DatabaseProvider,private formBuilder: FormBuilder,public alerta:AlertController) {

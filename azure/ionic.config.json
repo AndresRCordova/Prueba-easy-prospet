@@ -1,0 +1,7 @@
+{
+  "name": "azure",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}
