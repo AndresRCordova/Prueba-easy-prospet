@@ -105,10 +105,20 @@ export class DatabaseProvider {
     });
   }
 
-  realizarpago(idpago:number,idventa:number) {
+  realizarpago(idpago:number,idventa:number,importe:number) {
     return new Promise((resolve, reject) => {
-      let sql = "update Pagos set pagado=1 where Pagos.idPago=? AND Pagos.idGeneral=? ";
-      this.db.executeSql(sql,[idpago,idventa]).then((data) => {
+      let sql = "update Pagos set pagado=1,importe=? where Pagos.idPago=? AND Pagos.idGeneral=? ";
+      this.db.executeSql(sql,[importe,idpago,idventa]).then((data) => {
+        resolve(data);
+      }, (error) => {
+        reject(error);
+      });
+    });
+  }
+  updatepagos(idGeneral:number,importe:number) {
+    return new Promise((resolve, reject) => {
+      let sql = "update Pagos set importe=?  where pagado=0 AND Pagos.idGeneral=? ";
+      this.db.executeSql(sql,[importe,idGeneral]).then((data) => {
         resolve(data);
       }, (error) => {
         reject(error);
@@ -163,7 +173,11 @@ export class DatabaseProvider {
               importe: data.rows.item(i).importe,
             });
           }
-        }
+        }else{
+          arrayproductos.push({
+            importe: 0,
+        });
+      }
         resolve(arrayproductos);
       },(error)=>{
         reject(error);

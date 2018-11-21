@@ -10,10 +10,10 @@
 
 
 <ion-content padding>
-     <ion-item *ngFor="let venta of ventas">
-        <ion-label>Venta especifica:</ion-label>
-        <div item-content>
-            <h3>Producto: {{getnombreproducto(venta.idProducto)}}</h3>
+     <ion-item *ngFor="let venta of ventas" text-wrap>
+        <div>
+          <br>
+            <h3>producto: {{getnombreproducto(venta.idProducto)}}</h3>
             <h4>cantidad: {{venta.cantidad}}</h4>
           </div>
       </ion-item>

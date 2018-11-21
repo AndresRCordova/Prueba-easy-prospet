@@ -11,6 +11,12 @@
 
 <ion-content padding>
     <ion-item>
+       Numero de Venta: {{this.idgeneral}}
+    </ion-item>
+    <ion-item>
+        Restante: {{this.restante}}
+     </ion-item>
+    <ion-item>
         <ion-label>Pagos Pendientes</ion-label>
       <ion-toggle [(ngModel)]="vppendientes"></ion-toggle>
     </ion-item>
@@ -25,19 +31,18 @@
           </button>
       </ion-item>
 
+
   <ion-list *ngIf="vppendientes">
       <ion-list-header>
           Pagos Pendientes
         </ion-list-header>
-    <ion-item *ngFor="let venta of pagospendientes">
+    <ion-item *ngFor="let venta of pagospendientes" text-wrap>
         
         <ion-item>
-                <button ion-button item-right (click)="realizarpago(venta.idPago,venta.idGeneral)">
+                <button ion-button item-right (click)="showAlertRealizarPago(venta.idPago,venta.idGeneral)">
                     realizar pago
                   </button>
-          
-          <h2>Numero de venta: {{venta.idGeneral}}</h2>
-        <h3>Numero de pago: {{venta.idPago}}</h3>
+                  <br>
         <h3>Importe a pagar: ${{venta.importe}}</h3>
         <h3> {{venta.fecha_pago}}</h3>
         </ion-item>
@@ -48,13 +53,11 @@
         <ion-list-header>
             Pagos Realizados
           </ion-list-header>
-      <ion-item *ngFor="let venta of pagospagados">
+      <ion-item *ngFor="let venta of pagospagados" text-wrap>
           
           <ion-item>
             
-            <h2>Numero de venta: {{venta.idGeneral}}</h2>
-          <h3>Numero de pago: {{venta.idPago}}</h3>
-          <h3>Importe a pagar: ${{venta.importe}}</h3>
+          <h3>Importe a pagado: ${{venta.importe}}</h3>
           <h3> {{venta.fecha_pago}}</h3>
           </ion-item>
         

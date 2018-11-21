@@ -93,6 +93,7 @@ export class NuevaVentaPage {
     this.ventasespecificas.splice(this.ventasespecificas.length - 1, 1);
     this.cantidad.splice(this.cantidad.length - 1, 1);
     this.prodid.splice(this.cantidad.length - 1, 1);
+    this.cantidadintroducida();
   }
   showAlertcreado() {
     const alert = this.alerta.create({
@@ -261,6 +262,7 @@ export class NuevaVentaPage {
      }
     
 
+
     }
 
     console.log("venta creada satifactoriamente");
@@ -297,6 +299,12 @@ export class NuevaVentaPage {
     }
     this.total = sub;
   }
-
+  borrar(item){
+    console.log(item);
+    this.ventasespecificas.splice(item, 1);
+    this.cantidad.splice(item, 1);
+    this.prodid.splice(item, 1);
+    this.cantidadintroducida();
+  }
 
 }
